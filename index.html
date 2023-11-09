@@ -78,10 +78,10 @@
 					Map Size 
 				</td>
 				<td>
-					<input type="number" id="rowsInput"  placeholder="rows = 15 by default" />
+					<input type="number" id="rowsInput"  placeholder="rows = 10 by default" />
 				</td>
 				<td>
-					<input type="number" id="columnsInput"  placeholder="columns = 15 by default" />
+					<input type="number" id="columnsInput"  placeholder="columns = 10 by default" />
 				</td>
 				<td>
 					<button onclick="handleSubmit('mapSize')">Submit</button>
@@ -95,10 +95,10 @@
 					Start 
 				</td>
 				<td>
-					<input type="number" id="rowsInput"  placeholder="rows = 15 by default" />
+					<input type="number" id="startRowInput"  placeholder="" />
 				</td>
 				<td>
-					<input type="number" id="columnsInput"  placeholder="columns = 15 by default" />
+					<input type="number" id="startColumnInput"  placeholder="" />
 				</td>
 				<td>
 					<button onclick="handleSubmit('startPoint')">Submit</button>
@@ -111,10 +111,10 @@
 					Spot 
 				</td>
 				<td>
-					<input type="number" onchange="handelRowsChange(value)"  placeholder="rows = 25 by default" />
+					<input type="number" onchange="handelRowsChange(value)"  placeholder="" />
 				</td>
 				<td>
-					<input type="number" onchange="handelColumnssChange(value)"  placeholder="columns = 50 by default" />
+					<input type="number" onchange="handelColumnssChange(value)"  placeholder="" />
 				</td>
 				<td>
 					<button>Submit</button>
@@ -126,13 +126,13 @@
 					Hazard 
 				</td>
 				<td>
-					<input type="number" onchange="handelRowsChange(value)"  placeholder="rows = 25 by default" />
+					<input type="number" id="hazardRowInput"  placeholder="" />
 				</td>
 				<td>
-					<input type="number" onchange="handelColumnssChange(value)"  placeholder="columns = 50 by default" />
+					<input type="number" id="hazardColumnInput"  placeholder="" />
 				</td>
 				<td>
-					<button>Submit</button>
+					<button onclick="handleSubmit('hazardPoint')">Submit</button>
 				</td>
 			</tr>
 
@@ -141,10 +141,10 @@
 					Color Blob 
 				</td>
 				<td>
-					<input type="number" onchange="handelRowsChange(value)"  placeholder="rows = 25 by default" />
+					<input type="number" onchange="handelRowsChange(value)"  placeholder="" />
 				</td>
 				<td>
-					<input type="number" onchange="handelColumnssChange(value)"  placeholder="columns = 50 by default" />
+					<input type="number" onchange="handelColumnssChange(value)"  placeholder="" />
 				</td>
 				<td>
 					<button>Submit</button>
