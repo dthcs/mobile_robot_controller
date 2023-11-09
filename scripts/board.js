@@ -43,12 +43,12 @@ function handleSubmit(submitType) {
 
     // Call the functions to handle the changes
     if (submitType == 'mapSize') {
-        handelRowsChange(rowsValue);
-        handelColumnssChange(columnsValue);
+        handleRowChange(rowsValue);
+        handleColumnChange(columnsValue);
         // Display the size of the map
         displayMapSize();
     } else if (submitType == 'startPoint') {
-        handleStartPoint(rowsInput, columnsInput);
+        handleStartPoint(startRowValue, startColumnValue);
     }
     else if (submitType == 'hazardPoint') {
         handleHazardPoint(hazardRowValue, hazardColumnValue);
@@ -68,7 +68,7 @@ function displayMapSize() {
 }
 
 
-function handelRowsChange(rows) {
+function handleRowChange(rows) {
     rows = rows > 1 ? rows : 1
     tiles = []
     tileRowCount = rows
@@ -100,7 +100,7 @@ function handelRowsChange(rows) {
     tiles[start[0]][start[1]].state = "start"
 }
 
-function handelColumnssChange(columns) {
+function handleColumnChange(columns) {
     columns = columns > 0 ? columns : 1
     tiles = []
     tileColumnCount = columns
@@ -149,29 +149,29 @@ function handleStartPoint(r, c) {
 }
 
 //handle hazardPoint
-function handleHazardPoint(r,c) {
-    if ((c != boundX || r != boundY) && tiles[c][r].state != "start" && tiles[c][r].state != "end") {
+function handleHazardPoint(r,c) { //(c != boundX || r != boundY) && 
+    if (tiles[c][r].state != "start" && tiles[c][r].state != "end") {
         tiles[c][r].state = tiles[c][r].state == "empty" ? "wall" : "empty"
         boundX = c
         boundY = r
     }
 }
 
-function handelMouseMove(e) {
-    let x = e.pageX - canvas.offsetLeft;
-    let y = e.pageY - canvas.offsetTop;
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != boundX || r != boundY)) {
-                if (tiles[c][r].state != "start" && tiles[c][r].state != "end") {
-                    tiles[c][r].state = tiles[c][r].state == "empty" ? "wall" : "empty"
-                    boundX = c
-                    boundY = r
-                }
-            }
-        }
-    }
-}
+// function handelMouseMove(e) {
+//     let x = e.pageX - canvas.offsetLeft;
+//     let y = e.pageY - canvas.offsetTop;
+//     for (var c = 0; c < tileColumnCount; c++) {
+//         for (var r = 0; r < tileRowCount; r++) {
+//             if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != boundX || r != boundY)) {
+//                 if (tiles[c][r].state != "start" && tiles[c][r].state != "end") {
+//                     tiles[c][r].state = tiles[c][r].state == "empty" ? "wall" : "empty"
+//                     boundX = c
+//                     boundY = r
+//                 }
+//             }
+//         }
+//     }
+// }
 
 
 // function handleStartPoint(e) {
