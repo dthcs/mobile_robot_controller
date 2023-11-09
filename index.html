@@ -12,7 +12,10 @@
 			<canvas id="canvas" width="1200" height="1200" ></canvas>
 		<div class="controls">
 			<a href="https://github.com/dthcs" style="color:black; text-decoration: none;">GitHub Page</a>
-			<button onclick="Astar()" class="astar">Run A*</button>
+			<button onclick="Astar()" class="astar">Run Robot</button>
+			<button>Stop</button>
+			<button>AI Voice</button>
+
 			<!-- <button onclick="dijkstras()">Run Dikjstra</button>
 			<button onclick="DFS()">Run DFS</button> -->
 			<br />
@@ -60,31 +63,95 @@
 
 
 		<table>
-			<tr>
+			<!-- <tr>
 				<td>
 					Set delay in milli seconds:
 				</td>
 				<td>
 					<input type="number" onchange="handelSpeedChange(value)"  placeholder="delay = 5ms default" />
 				</td>
-			</tr>
+			</tr> -->
+
+			<!-- Map size -->
 			<tr>
 				<td>
-					number of rows:  
+					Map Size 
+				</td>
+				<td>
+					<input type="number" id="rowsInput"  placeholder="rows = 15 by default" />
+				</td>
+				<td>
+					<input type="number" id="columnsInput"  placeholder="columns = 15 by default" />
+				</td>
+				<td>
+					<button onclick="handleSubmit('mapSize')">Submit</button>
+				</td>
+				<td colspan="4" id="mapSizeDisplay"></td>	
+			</tr>
+
+			
+			<tr>
+				<td>
+					Start 
+				</td>
+				<td>
+					<input type="number" id="rowsInput"  placeholder="rows = 15 by default" />
+				</td>
+				<td>
+					<input type="number" id="columnsInput"  placeholder="columns = 15 by default" />
+				</td>
+				<td>
+					<button onclick="handleSubmit('startPoint')">Submit</button>
+				</td>
+				<td colspan="4" id="mapSizeDisplay"></td>	
+			</tr>
+
+			<tr>
+				<td>
+					Spot 
 				</td>
 				<td>
 					<input type="number" onchange="handelRowsChange(value)"  placeholder="rows = 25 by default" />
 				</td>
+				<td>
+					<input type="number" onchange="handelColumnssChange(value)"  placeholder="columns = 50 by default" />
+				</td>
+				<td>
+					<button>Submit</button>
+				</td>
 			</tr>
+
 			<tr>
 				<td>
-					number of columns:  
+					Hazard 
+				</td>
+				<td>
+					<input type="number" onchange="handelRowsChange(value)"  placeholder="rows = 25 by default" />
 				</td>
 				<td>
 					<input type="number" onchange="handelColumnssChange(value)"  placeholder="columns = 50 by default" />
 				</td>
+				<td>
+					<button>Submit</button>
+				</td>
 			</tr>
+
 			<tr>
+				<td>
+					Color Blob 
+				</td>
+				<td>
+					<input type="number" onchange="handelRowsChange(value)"  placeholder="rows = 25 by default" />
+				</td>
+				<td>
+					<input type="number" onchange="handelColumnssChange(value)"  placeholder="columns = 50 by default" />
+				</td>
+				<td>
+					<button>Submit</button>
+				</td>
+			</tr>
+
+			<!-- <tr>
 				<td>
 					Prob. threshold for random maze:  
 				</td>
@@ -99,7 +166,7 @@
 				<td>
 					<input type="number" onchange="handelCellSeperationChange(value)"  placeholder="Cell Seperation = 1px by default" />
 				</td>
-			</tr>
+			</tr> -->
 			
 		</table>
 	</div>

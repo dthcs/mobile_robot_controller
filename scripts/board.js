@@ -12,24 +12,50 @@ const HEIGHT = 800;
 let isRunning = false
 
 
-tileRowCount = 20
-tileColumnCount = 20
+tileRowCount = 15   //row number
+tileColumnCount = 15
 
 cellSeperation = 1
 
-tileW = 20;
+tileW = 20; //box width
 tileH = 20;
 
-
+//...
 let boundX = 0
 let boundY = 0
 
-let start = [2, Math.floor(tileRowCount / 2)]
+let start = [2, Math.floor(tileRowCount / 2)] //x, y
 let end = [tileColumnCount - 3, Math.floor(tileRowCount / 2)]
 var tiles = []
 
 
+function handleSubmit(submitType) {
+    // Get the input values when the button is clicked
+    var rowsValue = document.getElementById("rowsInput").value;
+    var columnsValue = document.getElementById("columnsInput").value;
 
+    // Call the functions to handle the changes
+    if (submitType == 'mapSize') {
+        handelRowsChange(rowsValue);
+        handelColumnssChange(columnsValue);
+        // Display the size of the map
+        displayMapSize();
+    } else if (submitType == 'startPoint') {
+        handleStartPoint(rowsValue, columnsValue);
+    }
+
+    // Display the size of the map
+    // displayMapSize();
+}
+
+function displayMapSize() {
+    // Get the input values
+    var rowsValue = document.getElementById("rowsInput").value;
+    var columnsValue = document.getElementById("columnsInput").value;
+
+    // Display the size of the map
+    document.getElementById("mapSizeDisplay").innerHTML = "(" + rowsValue + "," + columnsValue + ")";
+}
 
 
 function handelRowsChange(rows) {
@@ -96,6 +122,48 @@ function handelColumnssChange(columns) {
     tiles[start[0]][start[1]].state = "start"
 }
 
+function handleStartPoint(x, y) {
+    for (var c = 0; c < tileColumnCount; c++) {
+        for (var r = 0; r < tileRowCount; r++) {
+            if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW &&
+                r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH &&
+                (c !== start[0] || r !== start[1])) {
+                if (tiles[c][r].state !== "end") {
+                    tiles[start[0]][start[1]].state = "empty";
+                    start[0] = c;
+                    start[1] = r;
+                    openSet = [tiles[start[0]][start[1]]]; // only for Astar
+                    tiles[c][r].state = "start";
+                    console.log("changing the start position");
+                }
+            }
+        }
+    }
+}
+
+
+// function handleStartPoint(e) {
+
+//     let x = e.pageX - canvas.offsetLeft;
+//     let y = e.pageY - canvas.offsetTop;
+//     for (var c = 0; c < tileColumnCount; c++) {
+//         for (var r = 0; r < tileRowCount; r++) {
+//             if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != start[0] || r != start[1])) {
+//                 if (tiles[c][r].state != "end") {
+//                     tiles[start[0]][start[1]].state = "empty"
+//                     start[0] = c
+//                     start[1] = r
+//                     openSet = [tiles[start[0]][start[1]]]  // only for Astar
+//                     tiles[c][r].state = "start"
+//                     console.log("changing the start position")
+//                 }
+//             }
+//         }
+//     }
+// }
+
+
+//...
 function handelCellSeperationChange(value) {
     value = value >= 0 ? value : 0
     cellSeperation = Number(value)
@@ -114,9 +182,6 @@ function handelCellSeperationChange(value) {
 }
 
 
-
-
-
 for (var c = 0; c < tileColumnCount; c++) {
     tiles[c] = []
     for (var r = 0; r < tileRowCount; r++) {
@@ -124,6 +189,7 @@ for (var c = 0; c < tileColumnCount; c++) {
     }
 }
 
+//find path
 //  Adding neighbours to the tiles
 const handelNeighboursChange = () => {
     var selector = document.getElementById("Neighbours").value
@@ -156,6 +222,8 @@ handelNeighboursChange()
 tiles[start[0]][start[1]].state = "start";
 tiles[end[0]][end[1]].state = "end";
 
+
+//color the cells
 function rect(x, y, w, h, state) {
     //  draws a rectangle as per the given arguments
     // console.log("state = ", state)
@@ -215,164 +283,164 @@ function init() {
 init()
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-function createVerticalmaze() {
+// function createVerticalmaze() {
 
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            tiles[c][r].state = "empty"
-        }
-    }
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            if (c % 3 == 1) {
-                tiles[c][r].state = "wall"
-                if (r == 0 && c % 3 == 1) {
-                    tiles[c][r].state = "empty"
-                }
+//     for (var c = 0; c < tileColumnCount; c++) {
+//         for (var r = 0; r < tileRowCount; r++) {
+//             tiles[c][r].state = "empty"
+//         }
+//     }
+//     for (var c = 0; c < tileColumnCount; c++) {
+//         for (var r = 0; r < tileRowCount; r++) {
+//             if (c % 3 == 1) {
+//                 tiles[c][r].state = "wall"
+//                 if (r == 0 && c % 3 == 1) {
+//                     tiles[c][r].state = "empty"
+//                 }
 
-                if (r == tileRowCount - 1 && c % 6 == 1) {
-                    tiles[c][0].state = "wall"
-                    tiles[c][r].state = "empty"
-                }
+//                 if (r == tileRowCount - 1 && c % 6 == 1) {
+//                     tiles[c][0].state = "wall"
+//                     tiles[c][r].state = "empty"
+//                 }
 
-            }
-        }
-    }
-    tiles[0][0].state = "start"
-    tiles[tileColumnCount - 1][tileRowCount - 1].state = "end"
-    end[0] = tileColumnCount - 1
-    end[1] = tileRowCount - 1
-    start[0] = 0
-    start[1] = 0
-}
+//             }
+//         }
+//     }
+//     tiles[0][0].state = "start"
+//     tiles[tileColumnCount - 1][tileRowCount - 1].state = "end"
+//     end[0] = tileColumnCount - 1
+//     end[1] = tileRowCount - 1
+//     start[0] = 0
+//     start[1] = 0
+// }
 
-function createHorizontalMaze() {
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            tiles[c][r].state = "empty"
-        }
-    }
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            if (r % 3 == 1) {
-                tiles[c][r].state = "wall"
-                tiles[tileColumnCount - 1][r].state = "empty"
-                tiles[0][r].state = "empty"
+// function createHorizontalMaze() {
+//     for (var c = 0; c < tileColumnCount; c++) {
+//         for (var r = 0; r < tileRowCount; r++) {
+//             tiles[c][r].state = "empty"
+//         }
+//     }
+//     for (var c = 0; c < tileColumnCount; c++) {
+//         for (var r = 0; r < tileRowCount; r++) {
+//             if (r % 3 == 1) {
+//                 tiles[c][r].state = "wall"
+//                 tiles[tileColumnCount - 1][r].state = "empty"
+//                 tiles[0][r].state = "empty"
 
-                if (r % 3 == 1 && r % 6 != 1) {
-                    tiles[c][r].state = "wall"
-                }
-                if (r % 6 == 1) {
-                    tiles[0][r].state = "wall"
-                }
+//                 if (r % 3 == 1 && r % 6 != 1) {
+//                     tiles[c][r].state = "wall"
+//                 }
+//                 if (r % 6 == 1) {
+//                     tiles[0][r].state = "wall"
+//                 }
 
-            }
-        }
-    }
-    tiles[0][0].state = "start"
-    tiles[tileColumnCount - 1][tileRowCount - 1].state = "end"
-    end[0] = tileColumnCount - 1
-    end[1] = tileRowCount - 1
-    start[0] = 0
-    start[1] = 0
-}
+//             }
+//         }
+//     }
+//     tiles[0][0].state = "start"
+//     tiles[tileColumnCount - 1][tileRowCount - 1].state = "end"
+//     end[0] = tileColumnCount - 1
+//     end[1] = tileRowCount - 1
+//     start[0] = 0
+//     start[1] = 0
+// }
 
-function createDiagonalMaze() {
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            tiles[c][r].state = "empty"
-        }
-    }
+// function createDiagonalMaze() {
+//     for (var c = 0; c < tileColumnCount; c++) {
+//         for (var r = 0; r < tileRowCount; r++) {
+//             tiles[c][r].state = "empty"
+//         }
+//     }
 
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            if ((r + c) % 3 == 0) {
-                tiles[c][r].state = "wall"
-            }
-            if (c % 3 == 0 && c % 6 != 0) {
-                tiles[c][0].state = "empty"
-            }
-            if (r % 6 == 0) {
-                tiles[0][r].state = "empty"
-            }
-            if (c % 6 == 0) {
-                tiles[c][tileRowCount - 1].state = "empty"
-            }
-            if (r % 2 == 0) {
-                console.log("print")
-                tiles[tileColumnCount - 1][r].state = "empty"
-            }
-        }
-    }
-    tiles[0][0].state = "start"
-    tiles[tileColumnCount - 1][tileRowCount - 1].state = "end"
-    end[0] = tileColumnCount - 1
-    end[1] = tileRowCount - 1
-    start[0] = 0
-    start[1] = 0
+//     for (var c = 0; c < tileColumnCount; c++) {
+//         for (var r = 0; r < tileRowCount; r++) {
+//             if ((r + c) % 3 == 0) {
+//                 tiles[c][r].state = "wall"
+//             }
+//             if (c % 3 == 0 && c % 6 != 0) {
+//                 tiles[c][0].state = "empty"
+//             }
+//             if (r % 6 == 0) {
+//                 tiles[0][r].state = "empty"
+//             }
+//             if (c % 6 == 0) {
+//                 tiles[c][tileRowCount - 1].state = "empty"
+//             }
+//             if (r % 2 == 0) {
+//                 console.log("print")
+//                 tiles[tileColumnCount - 1][r].state = "empty"
+//             }
+//         }
+//     }
+//     tiles[0][0].state = "start"
+//     tiles[tileColumnCount - 1][tileRowCount - 1].state = "end"
+//     end[0] = tileColumnCount - 1
+//     end[1] = tileRowCount - 1
+//     start[0] = 0
+//     start[1] = 0
 
-}
+// }
 
-function createSpiralMaze() {
+// function createSpiralMaze() {
 
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            tiles[c][r].state = "wall"
-        }
-    }
+//     for (var c = 0; c < tileColumnCount; c++) {
+//         for (var r = 0; r < tileRowCount; r++) {
+//             tiles[c][r].state = "wall"
+//         }
+//     }
 
-    let upperBound = 0
-    let lowerBound = tileRowCount - 1
-    let leftBound = 0
-    let rightBound = tileColumnCount - 1
+//     let upperBound = 0
+//     let lowerBound = tileRowCount - 1
+//     let leftBound = 0
+//     let rightBound = tileColumnCount - 1
 
-    let right = 0
-    let down = 1
-    let left = 2
-    let up = 3
-    let direction = 0
-    while (upperBound <= lowerBound && leftBound <= rightBound) {
-        console.log(" ----------------------------------------- ")
-        console.log("UpperBound = ", upperBound)
-        console.log("lowerBound = ", lowerBound)
-        console.log(" ")
-        console.log("leftBound = ", leftBound)
-        console.log("rightBound = ", rightBound)
+//     let right = 0
+//     let down = 1
+//     let left = 2
+//     let up = 3
+//     let direction = 0
+//     while (upperBound <= lowerBound && leftBound <= rightBound) {
+//         console.log(" ----------------------------------------- ")
+//         console.log("UpperBound = ", upperBound)
+//         console.log("lowerBound = ", lowerBound)
+//         console.log(" ")
+//         console.log("leftBound = ", leftBound)
+//         console.log("rightBound = ", rightBound)
 
-        if (direction == right) {
-            for (let i = leftBound - 2 >= 0 ? leftBound - 2 : 0; i <= rightBound; i++) {
-                tiles[i][upperBound].state = "empty"
-            }
-            direction = down
-            upperBound += 2
-        }
-        else if (direction == down) {
-            for (let i = upperBound - 2; i <= lowerBound; i++) {
-                tiles[rightBound][i].state = "empty"
-            }
-            direction = left
-            rightBound -= 2
-        }
-        else if (direction == left) {
-            for (let i = leftBound; i <= rightBound + 2; i++) {
-                tiles[i][lowerBound].state = "empty"
-            }
-            direction = up
-            lowerBound -= 2
-        }
-        else if (direction == up) {
-            for (let i = upperBound; i <= lowerBound + 2; i++) {
-                tiles[leftBound][i].state = "empty"
-            }
-            direction = right
-            leftBound += 2
-        }
-    }
-    tiles[0][0].state = "start"
-    tiles[Math.floor(tileColumnCount / 2)][Math.floor(tileRowCount / 2)].state = "end"
-    end = [Math.floor(tileColumnCount / 2), Math.floor(tileRowCount / 2)]
-    start = [0, 0]
-}
+//         if (direction == right) {
+//             for (let i = leftBound - 2 >= 0 ? leftBound - 2 : 0; i <= rightBound; i++) {
+//                 tiles[i][upperBound].state = "empty"
+//             }
+//             direction = down
+//             upperBound += 2
+//         }
+//         else if (direction == down) {
+//             for (let i = upperBound - 2; i <= lowerBound; i++) {
+//                 tiles[rightBound][i].state = "empty"
+//             }
+//             direction = left
+//             rightBound -= 2
+//         }
+//         else if (direction == left) {
+//             for (let i = leftBound; i <= rightBound + 2; i++) {
+//                 tiles[i][lowerBound].state = "empty"
+//             }
+//             direction = up
+//             lowerBound -= 2
+//         }
+//         else if (direction == up) {
+//             for (let i = upperBound; i <= lowerBound + 2; i++) {
+//                 tiles[leftBound][i].state = "empty"
+//             }
+//             direction = right
+//             leftBound += 2
+//         }
+//     }
+//     tiles[0][0].state = "start"
+//     tiles[Math.floor(tileColumnCount / 2)][Math.floor(tileRowCount / 2)].state = "end"
+//     end = [Math.floor(tileColumnCount / 2), Math.floor(tileRowCount / 2)]
+//     start = [0, 0]
+// }
 
 function clearPath() {
     for (var c = 0; c < tileColumnCount; c++) {
@@ -404,31 +472,31 @@ function resetMaze() {
     tiles[end[0]][end[1]].state = "end"
 }
 
-function randomMaze() {
-    var chance
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
+// function randomMaze() {
+//     var chance
+//     for (var c = 0; c < tileColumnCount; c++) {
+//         for (var r = 0; r < tileRowCount; r++) {
 
-            if (tiles[c][r].state != "start" && tiles[c][r].state != "end") {
+//             if (tiles[c][r].state != "start" && tiles[c][r].state != "end") {
 
-                chance = Math.random()
-                tiles[c][r].state = chance < threshold ? "wall" : "empty"
-            }
-        }
-    }
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            var neighbours = []
+//                 chance = Math.random()
+//                 tiles[c][r].state = chance < threshold ? "wall" : "empty"
+//             }
+//         }
+//     }
+//     for (var c = 0; c < tileColumnCount; c++) {
+//         for (var r = 0; r < tileRowCount; r++) {
+//             var neighbours = []
 
-            if (c > 0) { neighbours.push(tiles[c - 1][r]) }
-            if (r > 0) { neighbours.push(tiles[c][r - 1]) }
-            if (c < tileColumnCount - 1) { neighbours.push(tiles[c + 1][r]) }
-            if (r < tileRowCount - 1) { neighbours.push(tiles[c][r + 1]) }
+//             if (c > 0) { neighbours.push(tiles[c - 1][r]) }
+//             if (r > 0) { neighbours.push(tiles[c][r - 1]) }
+//             if (c < tileColumnCount - 1) { neighbours.push(tiles[c + 1][r]) }
+//             if (r < tileRowCount - 1) { neighbours.push(tiles[c][r + 1]) }
 
-            tiles[c][r].neighbours = neighbours
-        }
-    }
-}
+//             tiles[c][r].neighbours = neighbours
+//         }
+//     }
+// }
 
 function handelMouseMoveStart(e) {
 
