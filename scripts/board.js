@@ -12,8 +12,8 @@ const HEIGHT = 800;
 let isRunning = false
 
 
-tileRowCount = 15   //row number
-tileColumnCount = 15
+tileRowCount = 10   //row number
+tileColumnCount = 10
 
 cellSeperation = 1
 
@@ -34,6 +34,13 @@ function handleSubmit(submitType) {
     var rowsValue = document.getElementById("rowsInput").value;
     var columnsValue = document.getElementById("columnsInput").value;
 
+    var startRowValue = document.getElementById("startRowInput").value-1;
+    var startColumnValue = document.getElementById("startColumnInput").value-1;
+
+    var hazardRowValue = document.getElementById("hazardRowInput").value-1;
+    var hazardColumnValue = document.getElementById("hazardColumnInput").value-1;
+
+
     // Call the functions to handle the changes
     if (submitType == 'mapSize') {
         handelRowsChange(rowsValue);
@@ -41,7 +48,10 @@ function handleSubmit(submitType) {
         // Display the size of the map
         displayMapSize();
     } else if (submitType == 'startPoint') {
-        handleStartPoint(rowsValue, columnsValue);
+        handleStartPoint(rowsInput, columnsInput);
+    }
+    else if (submitType == 'hazardPoint') {
+        handleHazardPoint(hazardRowValue, hazardColumnValue);
     }
 
     // Display the size of the map
@@ -122,19 +132,41 @@ function handelColumnssChange(columns) {
     tiles[start[0]][start[1]].state = "start"
 }
 
-function handleStartPoint(x, y) {
+//handle startPoint
+function handleStartPoint(r, c) {
+
+    if(r < tileRowCount && c < tileColumnCount){
+
+        if (tiles[c][r].state !== "end") {
+            tiles[start[0]][start[1]].state = "empty";
+            start[0] = c;
+            start[1] = r;
+            openSet = [tiles[start[0]][start[1]]]; // only for Astar
+            tiles[c][r].state = "start";
+            console.log("changing the start position");
+        }
+    }
+}
+
+//handle hazardPoint
+function handleHazardPoint(r,c) {
+    if ((c != boundX || r != boundY) && tiles[c][r].state != "start" && tiles[c][r].state != "end") {
+        tiles[c][r].state = tiles[c][r].state == "empty" ? "wall" : "empty"
+        boundX = c
+        boundY = r
+    }
+}
+
+function handelMouseMove(e) {
+    let x = e.pageX - canvas.offsetLeft;
+    let y = e.pageY - canvas.offsetTop;
     for (var c = 0; c < tileColumnCount; c++) {
         for (var r = 0; r < tileRowCount; r++) {
-            if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW &&
-                r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH &&
-                (c !== start[0] || r !== start[1])) {
-                if (tiles[c][r].state !== "end") {
-                    tiles[start[0]][start[1]].state = "empty";
-                    start[0] = c;
-                    start[1] = r;
-                    openSet = [tiles[start[0]][start[1]]]; // only for Astar
-                    tiles[c][r].state = "start";
-                    console.log("changing the start position");
+            if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != boundX || r != boundY)) {
+                if (tiles[c][r].state != "start" && tiles[c][r].state != "end") {
+                    tiles[c][r].state = tiles[c][r].state == "empty" ? "wall" : "empty"
+                    boundX = c
+                    boundY = r
                 }
             }
         }
@@ -191,6 +223,7 @@ for (var c = 0; c < tileColumnCount; c++) {
 
 //find path
 //  Adding neighbours to the tiles
+//algorithm run
 const handelNeighboursChange = () => {
     var selector = document.getElementById("Neighbours").value
     console.log("inti neighbours was called")
@@ -501,10 +534,12 @@ function resetMaze() {
 function handelMouseMoveStart(e) {
 
     let x = e.pageX - canvas.offsetLeft;
+    // console.log(x)
     let y = e.pageY - canvas.offsetTop;
     for (var c = 0; c < tileColumnCount; c++) {
         for (var r = 0; r < tileRowCount; r++) {
             if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != start[0] || r != start[1])) {
+                console.log(c)
                 if (tiles[c][r].state != "end") {
                     tiles[start[0]][start[1]].state = "empty"
                     start[0] = c
