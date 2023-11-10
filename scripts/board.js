@@ -40,6 +40,9 @@ function handleSubmit(submitType) {
     var hazardRowValue = document.getElementById("hazardRowInput").value-1;
     var hazardColumnValue = document.getElementById("hazardColumnInput").value-1;
 
+    var endRowValue = document.getElementById("endRowInput").value-1;
+    var endColumnValue = document.getElementById("endColumnInput").value-1;
+
 
     // Call the functions to handle the changes
     if (submitType == 'mapSize') {
@@ -52,6 +55,9 @@ function handleSubmit(submitType) {
     }
     else if (submitType == 'hazardPoint') {
         handleHazardPoint(hazardRowValue, hazardColumnValue);
+    }
+    else if (submitType == 'endPoint') {
+        handleEndPoint(endRowValue, endColumnValue);
     }
 
     // Display the size of the map
@@ -154,6 +160,39 @@ function handleHazardPoint(r,c) { //(c != boundX || r != boundY) &&
         tiles[c][r].state = tiles[c][r].state == "empty" ? "wall" : "empty"
         boundX = c
         boundY = r
+    }
+}
+
+//handle endPoint
+function handleEndPoint(r, c) {
+
+    if(r < tileRowCount && c < tileColumnCount){
+
+        if (tiles[c][r].state !== "start") {
+            tiles[end[0]][end[1]].state = "empty";
+            end[0] = c;
+            end[1] = r;
+            tiles[c][r].state = "end";
+            console.log("changing the end position");
+        }
+    }
+}
+
+function handelMouseMoveEnd(e) {
+    let x = e.pageX - canvas.offsetLeft;
+    let y = e.pageY - canvas.offsetTop;
+    console.log("end is being moved")
+    for (var c = 0; c < tileColumnCount; c++) {
+        for (var r = 0; r < tileRowCount; r++) {
+            if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != start[0] || r != start[1])) {
+                if (tiles[c][r].state != "start") {
+                    tiles[end[0]][end[1]].state = "empty"
+                    end[0] = c
+                    end[1] = r
+                    tiles[c][r].state = "end"
+                }
+            }
+        }
     }
 }
 
