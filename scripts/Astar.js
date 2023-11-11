@@ -50,24 +50,57 @@ function hurestics(a, b) {
 	return dist1
 }
 
-
-
 function showPath() {
 	console.log("Show path was called ")
 	var temp = tiles[end[0]][end[1]]
+	var temp_start = tiles[start[0]][start[1]]
+	// console.log(temp)
 	tiles[end[0]][end[1]].state = "end"
+
 	const abc = () => {
-		tiles[end[0]][end[1]].state = "end"
-		if (!temp.previous) {
+		temp = tiles[end[0]][end[1]]
+		if (temp.previous == temp_start) {
+			tiles[temp.column][temp.row].state = "start"
+			tiles[temp.column][temp.row].previous.state = "empty"
 			return
 		}
-		tiles[temp.column][temp.row].state = "path"
-		temp = tiles[temp.column][temp.row].previous
-		setTimeout(abc, 10)
+		while(temp.previous != temp_start){
+			temp = temp.previous;
+		}
+		
+		tiles[temp.column][temp.row].state = "start"
+		tiles[temp.column][temp.row].previous.state = "empty"
+		temp_start = temp;
+		// tiles[end[0]][end[1]].state = "end"
+		// tiles[temp.column][temp.row].state = "path"
+		// temp = tiles[temp.column][temp.row].previous
+		// console.log(tiles[temp.column][temp.row])
+		setTimeout(abc, 1000)
+		// tiles[temp.column][temp.row].state = "empty"
 	}
 	abc()
-
+	
 }
+
+// function showPath() {
+// 	console.log("Show path was called ")
+// 	var temp = tiles[end[0]][end[1]]
+// 	console.log(temp)
+// 	tiles[end[0]][end[1]].state = "end"
+// 	const abc = () => {
+// 		tiles[end[0]][end[1]].state = "end"
+// 		if (!temp.previous) {
+// 			return
+// 		}
+// 		tiles[temp.column][temp.row].state = "path"
+// 		temp = tiles[temp.column][temp.row].previous
+// 		// console.log(tiles[temp.column][temp.row])
+// 		setTimeout(abc, 1000)
+// 	}
+// 	abc()
+
+// }
+
 isRunning = true
 
 function Astar() {
@@ -126,30 +159,30 @@ function Astar() {
 
 			return
 		}
-		var selector = document.getElementById("Neighbours").value
-		if (selector == "Diagonal Neighbours") {
-			if (
-				(currentNode.column - 1 == tiles[end[0]][end[1]].column
-					&& currentNode.row == tiles[end[0]][end[1]].row)
-				||
-				(currentNode.column + 1 == tiles[end[0]][end[1]].column
-					&& currentNode.row == tiles[end[0]][end[1]].row)
-				||
-				(currentNode.column == tiles[end[0]][end[1]].column
-					&& currentNode.row - 1 == tiles[end[0]][end[1]].row)
-				||
-				(currentNode.column + 1 == tiles[end[0]][end[1]].column
-					&& currentNode.row == tiles[end[0]][end[1]].row)
-			) {
-				solved = true
-				isRunning = false
-				clearPath()
-				tiles[tiles[end[0]][end[1]].column][tiles[end[0]][end[1]].row].previous = tiles[currentNode.column][currentNode.row]
-				setTimeout(showPath, delay)
-				openSet = []
-				return
-			}
-		}
+		// var selector = document.getElementById("Neighbours").value
+		// if (selector == "Diagonal Neighbours") {
+		// 	if (
+		// 		(currentNode.column - 1 == tiles[end[0]][end[1]].column
+		// 			&& currentNode.row == tiles[end[0]][end[1]].row)
+		// 		||
+		// 		(currentNode.column + 1 == tiles[end[0]][end[1]].column
+		// 			&& currentNode.row == tiles[end[0]][end[1]].row)
+		// 		||
+		// 		(currentNode.column == tiles[end[0]][end[1]].column
+		// 			&& currentNode.row - 1 == tiles[end[0]][end[1]].row)
+		// 		||
+		// 		(currentNode.column + 1 == tiles[end[0]][end[1]].column
+		// 			&& currentNode.row == tiles[end[0]][end[1]].row)
+		// 	) {
+		// 		solved = true
+		// 		isRunning = false
+		// 		clearPath()
+		// 		tiles[tiles[end[0]][end[1]].column][tiles[end[0]][end[1]].row].previous = tiles[currentNode.column][currentNode.row]
+		// 		setTimeout(showPath, delay)
+		// 		openSet = []
+		// 		return
+		// 	}
+		// }
 		if (closedSet.length > tileRowCount * tileColumnCount) {
 			isRunning = false
 			solved = false
@@ -187,6 +220,7 @@ function Astar() {
 					tiles[neighbours[i].column][neighbours[i].row].h = hurestics(tiles[neighbours[i].column][neighbours[i].row], tiles[end[0]][end[1]])
 					tiles[neighbours[i].column][neighbours[i].row].f = tiles[neighbours[i].column][neighbours[i].row].g + tiles[neighbours[i].column][neighbours[i].row].h
 					tiles[neighbours[i].column][neighbours[i].row].previous = tiles[currentNode.column][currentNode.row]
+					// console.log(tiles[neighbours[i].column][neighbours[i].row].previous)
 				}
 			}
 		}

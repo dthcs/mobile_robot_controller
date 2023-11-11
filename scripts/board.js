@@ -25,6 +25,7 @@ let boundX = 0
 let boundY = 0
 
 let start = [2, Math.floor(tileRowCount / 2)] //x, y
+// let end = [[]]
 let end = [tileColumnCount - 3, Math.floor(tileRowCount / 2)]
 var tiles = []
 
@@ -157,9 +158,9 @@ function handleStartPoint(r, c) {
 //handle hazardPoint
 function handleHazardPoint(r,c) { //(c != boundX || r != boundY) && 
     if (tiles[c][r].state != "start" && tiles[c][r].state != "end") {
-        tiles[c][r].state = tiles[c][r].state == "empty" ? "wall" : "empty"
-        boundX = c
-        boundY = r
+        tiles[c][r].state = tiles[c][r].state == "empty" ? "wall" : "empty";
+        boundX = c;
+        boundY = r;
     }
 }
 
@@ -169,10 +170,10 @@ function handleEndPoint(r, c) {
     if(r < tileRowCount && c < tileColumnCount){
 
         if (tiles[c][r].state !== "start") {
-            tiles[end[0]][end[1]].state = "empty";
+            // tiles[end[0]][end[1]].state = "empty";
             end[0] = c;
             end[1] = r;
-            tiles[c][r].state = "end";
+            tiles[c][r].state = tiles[c][r].state == "empty" ? "end" : "empty";
             console.log("changing the end position");
         }
     }
@@ -570,45 +571,45 @@ function resetMaze() {
 //     }
 // }
 
-function handelMouseMoveStart(e) {
+// function handelMouseMoveStart(e) {
 
-    let x = e.pageX - canvas.offsetLeft;
-    // console.log(x)
-    let y = e.pageY - canvas.offsetTop;
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != start[0] || r != start[1])) {
-                console.log(c)
-                if (tiles[c][r].state != "end") {
-                    tiles[start[0]][start[1]].state = "empty"
-                    start[0] = c
-                    start[1] = r
-                    openSet = [tiles[start[0]][start[1]]]  // only for Astar
-                    tiles[c][r].state = "start"
-                    console.log("changing the start position")
-                }
-            }
-        }
-    }
-}
+//     let x = e.pageX - canvas.offsetLeft;
+//     // console.log(x)
+//     let y = e.pageY - canvas.offsetTop;
+//     for (var c = 0; c < tileColumnCount; c++) {
+//         for (var r = 0; r < tileRowCount; r++) {
+//             if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != start[0] || r != start[1])) {
+//                 console.log(c)
+//                 if (tiles[c][r].state != "end") {
+//                     tiles[start[0]][start[1]].state = "empty"
+//                     start[0] = c
+//                     start[1] = r
+//                     openSet = [tiles[start[0]][start[1]]]  // only for Astar
+//                     tiles[c][r].state = "start"
+//                     console.log("changing the start position")
+//                 }
+//             }
+//         }
+//     }
+// }
 
-function handelMouseMoveEnd(e) {
-    let x = e.pageX - canvas.offsetLeft;
-    let y = e.pageY - canvas.offsetTop;
-    console.log("end is being moved")
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != start[0] || r != start[1])) {
-                if (tiles[c][r].state != "start") {
-                    tiles[end[0]][end[1]].state = "empty"
-                    end[0] = c
-                    end[1] = r
-                    tiles[c][r].state = "end"
-                }
-            }
-        }
-    }
-}
+// function handelMouseMoveEnd(e) {
+//     let x = e.pageX - canvas.offsetLeft;
+//     let y = e.pageY - canvas.offsetTop;
+//     console.log("end is being moved")
+//     for (var c = 0; c < tileColumnCount; c++) {
+//         for (var r = 0; r < tileRowCount; r++) {
+//             if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != start[0] || r != start[1])) {
+//                 if (tiles[c][r].state != "start") {
+//                     tiles[end[0]][end[1]].state = "empty"
+//                     end[0] = c
+//                     end[1] = r
+//                     tiles[c][r].state = "end"
+//                 }
+//             }
+//         }
+//     }
+// }
 
 function handelMouseMove(e) {
     let x = e.pageX - canvas.offsetLeft;
