@@ -29,7 +29,7 @@ var start = [1,1]
 // let end = [[]]
 // let end = [tileColumnCount - 3, Math.floor(tileRowCount / 2)]
 var end = []
-// var spot = []
+var spot = []
 
 var tiles = []
 
@@ -169,22 +169,45 @@ function handleHazardPoint(r,c) { //(c != boundX || r != boundY) &&
 }
 
 //handle endPoint
+
 function handleEndPoint(r, c) {
-
-    if(r < tileRowCount && c < tileColumnCount){
-
+    if (r < tileRowCount && c < tileColumnCount) {
         if (tiles[c][r].state !== "start") {
-            // tiles[end[0]][end[1]].state = "empty";
-            // spot.push([c,r]);
-            // console.log(spot);
-            end[0] = c;
-            end[1] = r;
-            
-            tiles[c][r].state = tiles[c][r].state == "empty" ? "end" : "empty";
-            console.log("changing the end position");
+            if (tiles[c][r].state === "empty") {
+                // If the tile is currently empty, set it to 'end' and add [c, r] to spot list
+                tiles[c][r].state = "end";
+                spot.push([c, r]);
+                console.log("changing the end position");
+            } else {
+                // If the tile is not empty, set it to 'empty' and remove [c, r] from spot list
+                tiles[c][r].state = "empty";
+                spot = spot.filter(item => !(item[0] === c && item[1] === r));
+                console.log("changing the empty position");
+            }
+            console.log("spot", spot[spot.length - 1]);
+            end[0] = spot[spot.length - 1][0]
+            end[1] = spot[spot.length - 1][1]
+            console.log("end", end[0]);
         }
     }
 }
+
+// function handleEndPoint(r, c) {
+
+//     if(r < tileRowCount && c < tileColumnCount){
+
+//         if (tiles[c][r].state !== "start") {
+//             // tiles[end[0]][end[1]].state = "empty";
+//             // spot.push([c,r]);
+//             // console.log(spot);
+//             end[0] = c;
+//             end[1] = r;
+            
+//             tiles[c][r].state = tiles[c][r].state == "empty" ? "end" : "empty";
+//             console.log("changing the end position");
+//         }
+//     }
+// }
 
 function handelMouseMoveEnd(e) {
     let x = e.pageX - canvas.offsetLeft;
@@ -525,13 +548,13 @@ init()
 function clearPath() {
     for (var c = 0; c < tileColumnCount; c++) {
         for (var r = 0; r < tileRowCount; r++) {
-            if (tiles[c][r].state != "wall") {
+            if (tiles[c][r].state != "wall" && tiles[c][r].state != "start" && tiles[c][r].state != "end") {
                 tiles[c][r].state = "empty"
             }
         }
     }
-    tiles[start[0]][start[1]].state = "start"
-    tiles[end[0]][end[1]].state = "end"
+    // tiles[start[0]][start[1]].state = "start"
+    // tiles[end[0]][end[1]].state = "end"
 
 }
 
