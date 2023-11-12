@@ -24,9 +24,13 @@ tileH = 20;
 let boundX = 0
 let boundY = 0
 
-let start = [2, Math.floor(tileRowCount / 2)] //x, y
+// let start = [2, Math.floor(tileRowCount / 2)] //x, y
+var start = [1,1]
 // let end = [[]]
-let end = [tileColumnCount - 3, Math.floor(tileRowCount / 2)]
+// let end = [tileColumnCount - 3, Math.floor(tileRowCount / 2)]
+var end = []
+// var spot = []
+
 var tiles = []
 
 
@@ -79,8 +83,8 @@ function handleRowChange(rows) {
     rows = rows > 1 ? rows : 1
     tiles = []
     tileRowCount = rows
-    end = [tileColumnCount - 1, rows - 1]
-    start = [0, 0]
+    // end = [tileColumnCount - 1, rows - 1]
+    // start = [0, 0]
     canvas.height = (tileH + cellSeperation) * (tileRowCount) - cellSeperation
     canvas.width = (tileW + cellSeperation) * (tileColumnCount) - cellSeperation
 
@@ -103,16 +107,16 @@ function handleRowChange(rows) {
             tiles[c][r].neighbours = neighbours
         }
     }
-    tiles[end[0]][end[1]].state = "end"
-    tiles[start[0]][start[1]].state = "start"
+    // tiles[end[0]][end[1]].state = "end"
+    // tiles[start[0]][start[1]].state = "start"
 }
 
 function handleColumnChange(columns) {
     columns = columns > 0 ? columns : 1
     tiles = []
     tileColumnCount = columns
-    end = [columns - 1, tileRowCount - 1]
-    start = [0, 0]
+    // end = [columns - 1, tileRowCount - 1]
+    // start = [0, 0]
     canvas.height = (tileH + cellSeperation) * (tileRowCount) - cellSeperation
     canvas.width = (tileW + cellSeperation) * (tileColumnCount) - cellSeperation
     for (var c = 0; c < tileColumnCount; c++) {
@@ -135,8 +139,8 @@ function handleColumnChange(columns) {
             tiles[c][r].neighbours = neighbours
         }
     }
-    tiles[end[0]][end[1]].state = "end"
-    tiles[start[0]][start[1]].state = "start"
+    // tiles[end[0]][end[1]].state = "end"
+    // tiles[start[0]][start[1]].state = "start"
 }
 
 //handle startPoint
@@ -171,8 +175,11 @@ function handleEndPoint(r, c) {
 
         if (tiles[c][r].state !== "start") {
             // tiles[end[0]][end[1]].state = "empty";
+            // spot.push([c,r]);
+            // console.log(spot);
             end[0] = c;
             end[1] = r;
+            
             tiles[c][r].state = tiles[c][r].state == "empty" ? "end" : "empty";
             console.log("changing the end position");
         }
@@ -292,8 +299,8 @@ handelNeighboursChange()
 // console.log("tiles = ", tiles)
 
 
-tiles[start[0]][start[1]].state = "start";
-tiles[end[0]][end[1]].state = "end";
+// tiles[start[0]][start[1]].state = "start";
+// tiles[end[0]][end[1]].state = "end";
 
 
 //color the cells

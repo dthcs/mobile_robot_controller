@@ -103,6 +103,16 @@ function showPath() {
 
 isRunning = true
 
+// var spot = []
+// for (var c = 0; c < tileColumnCount; c++) {
+// 	for (var r = 0; r < tileRowCount; r++) {
+// 		if (tiles[c][r].state == "end") {
+// 			spot.push([c, r]);
+// 		}
+// 	}
+// }
+// console.log(spot);
+
 function Astar() {
 
 	console.log("running A*")
@@ -110,6 +120,7 @@ function Astar() {
 	var openSet = [tiles[start[0]][start[1]]]  // this is changed in these functinons :-  handelMouseMoveStart, resetMaze 
 	var closedSet = []
 	var isRunning = true
+
 
 	// This will clear any residual paath state cells from any previous session
 	// This is only for proper visualisarion and makes no effect on the actual function
@@ -154,6 +165,16 @@ function Astar() {
 			isRunning = false
 			clearPath()
 			setTimeout(showPath, delay)
+			// setTimeout(() => {
+            //     showPath();
+            //     // After showing the path, check if there are more endpoints in the spot array
+            //     if (spot.length > 0) {
+			// 		start = end
+            //         // Pop the endpoint and set it as the new start point
+            //         end = spot.pop();
+            //         Astar();
+            //     }
+            // }, delay);
 
 			openSet = []
 
