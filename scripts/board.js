@@ -48,6 +48,8 @@ function handleSubmit(submitType) {
     var endRowValue = document.getElementById("endRowInput").value-1;
     var endColumnValue = document.getElementById("endColumnInput").value-1;
 
+    var colorBlobRowValue = document.getElementById("colorBlobRowInput").value-1;
+    var colorBlobColumnValue = document.getElementById("colorBlobColumnInput").value-1;
 
     // Call the functions to handle the changes
     if (submitType == 'mapSize') {
@@ -63,6 +65,9 @@ function handleSubmit(submitType) {
     }
     else if (submitType == 'endPoint') {
         handleEndPoint(endRowValue, endColumnValue);
+    }
+    else if (submitType == 'colorBlobPoint') {
+        handleColorBlobPoint(colorBlobRowValue, colorBlobColumnValue);
     }
 
     // Display the size of the map
@@ -161,7 +166,7 @@ function handleStartPoint(r, c) {
 
 //handle hazardPoint
 function handleHazardPoint(r,c) { //(c != boundX || r != boundY) && 
-    if (tiles[c][r].state != "start" && tiles[c][r].state != "end") {
+    if (tiles[c][r].state != "start" && tiles[c][r].state != "end" && tiles[c][r].state != "blob") {
         tiles[c][r].state = tiles[c][r].state == "empty" ? "wall" : "empty";
         boundX = c;
         boundY = r;
@@ -189,6 +194,14 @@ function handleEndPoint(r, c) {
             end[1] = spot[spot.length - 1][1]
             console.log("end", end[0]);
         }
+    }
+}
+
+function handleColorBlobPoint(r, c){
+    if (tiles[c][r].state != "start" && tiles[c][r].state != "end" && tiles[c][r].state != "wall") {
+        tiles[c][r].state = tiles[c][r].state == "empty" ? "blob" : "empty";
+        boundX = c;
+        boundY = r;
     }
 }
 
@@ -346,6 +359,7 @@ function rect(x, y, w, h, state) {
     else if (state == "up") { ctx.fillStyle = "red" }
 
     else if (state == "neighbour") { ctx.fillStyle = "blue" }
+    else if (state == "blob") { ctx.fillStyle = "pink" }
 
 
     ctx.beginPath();
