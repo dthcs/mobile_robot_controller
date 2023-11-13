@@ -97,9 +97,9 @@ function showPath() {
 	return new Promise((resolve) => {
 	  const abc = () => {
 		temp = tiles[end[0]][end[1]];
-		if (temp.previous == temp_start) {
-		  tiles[temp.column][temp.row].state = "start";
-		  tiles[temp.column][temp.row].previous.state = "empty";
+		if (temp == temp_start) {
+		//   tiles[temp.column][temp.row].state = "start";
+		//   tiles[temp.column][temp.row].previous.state = "empty";
 		  resolve(); // Resolve the promise when finished
 		  return;
 		}
@@ -107,17 +107,43 @@ function showPath() {
 		while (temp.previous != temp_start) {
 		  temp = temp.previous;
 		}
-  
-		tiles[temp.column][temp.row].state = "start";
-		tiles[temp.column][temp.row].previous.state = "empty";
+
+		if(tiles[temp.column][temp.row].state === "blob"){
+			//print on web that robot run through a important cell
+			displayNotice("Robot ran through an important cell at (" + (temp.row+1) + ", " + (temp.column+1) + ")");
+			tiles[temp.column][temp.row].state = "blob";
+		}
+		else{
+			tiles[temp.column][temp.row].state = "start";
+			
+		}
+		
+		if(tiles[temp.column][temp.row].previous.state === "blob"){
+			tiles[temp.column][temp.row].previous.state = "blob";
+
+		}else{
+			tiles[temp.column][temp.row].previous.state = "empty";
+		}
+
 		temp_start = temp;
   
-		setTimeout(abc, 500);
+		setTimeout(abc, 800);
 	  };
   
 	  abc();
 	});
   }
+
+function displayNotice(message) {
+    var noticeDiv = document.getElementById("notice");
+
+    if (noticeDiv) {
+        // Append the new notice message to the existing content
+        noticeDiv.innerHTML += "<p>" + message + "</p>";
+    } else {
+        console.log(message);
+    }
+}
 
   //dung
 // function showPath() {
@@ -287,9 +313,9 @@ function Astar() {
 
 		removeElmentFromArray(openSet, currentNode)
 		closedSet.push(tiles[currentNode.column][currentNode.row])
-		if (tiles[currentNode.column][currentNode.row].state != "start" && tiles[currentNode.column][currentNode.row].state != "end") {
-			tiles[currentNode.column][currentNode.row].state = "visited"
-		}
+		// if (tiles[currentNode.column][currentNode.row].state != "start" && tiles[currentNode.column][currentNode.row].state != "end") {
+		// 	tiles[currentNode.column][currentNode.row].state = "visited"
+		// }
 		var neighbours = currentNode.neighbours
 		for (var i = 0; i < neighbours.length; i++) {
 			if (tiles[neighbours[i].column][neighbours[i].row].state != "wall" && (tiles[neighbours[i].column][neighbours[i].row].state != "end" || tiles[neighbours[i].column][neighbours[i].row] === tiles[end[0]][end[1]]) && !closedSet.includes(tiles[neighbours[i].column][neighbours[i].row])) {
@@ -308,7 +334,7 @@ function Astar() {
 					newPathBetter = true // since this will be the only path we have for the node
 					tiles[neighbours[i].column][neighbours[i].row].g = tempG
 					openSet.push(tiles[neighbours[i].column][neighbours[i].row])
-					tiles[neighbours[i].column][neighbours[i].row].state = "open"
+					// tiles[neighbours[i].column][neighbours[i].row].state = "open"
 				}
 
 				if (newPathBetter) {
@@ -461,7 +487,7 @@ function Astar() {
 
 function runRobot(){
 	Astar();
-	clearPath();
+	// clearPath();
 	showPath().then(() => {
 		if(spot.length > 1){
 			start = spot.pop();
