@@ -192,7 +192,7 @@ function handleEndPoint(r, c) {
             console.log("spot", spot[spot.length - 1]);
             end[0] = spot[spot.length - 1][0]
             end[1] = spot[spot.length - 1][1]
-            console.log("end", end[0]);
+            // console.log("end", end[0]);
         }
     }
 }
@@ -360,6 +360,7 @@ function rect(x, y, w, h, state) {
 
     else if (state == "neighbour") { ctx.fillStyle = "blue" }
     else if (state == "blob") { ctx.fillStyle = "pink" }
+    else if (state == "enterBlob") { ctx.fillStyle = "yellow" }
 
 
     ctx.beginPath();

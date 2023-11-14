@@ -88,62 +88,7 @@ function hurestics(a, b) {
 //     abc();
 // }
 
-function showPath() {
-	console.log("Show path was called ");
-	var temp = tiles[end[0]][end[1]];
-	var temp_start = tiles[start[0]][start[1]];
-	tiles[end[0]][end[1]].state = "end";
-  
-	return new Promise((resolve) => {
-	  const abc = () => {
-		temp = tiles[end[0]][end[1]];
-		if (temp == temp_start) {
-		//   tiles[temp.column][temp.row].state = "start";
-		//   tiles[temp.column][temp.row].previous.state = "empty";
-		  resolve(); // Resolve the promise when finished
-		  return;
-		}
-  
-		while (temp.previous != temp_start) {
-		  temp = temp.previous;
-		}
 
-		if(tiles[temp.column][temp.row].state === "blob"){
-			//print on web that robot run through a important cell
-			displayNotice("Robot ran through an important cell at (" + (temp.row+1) + ", " + (temp.column+1) + ")");
-			tiles[temp.column][temp.row].state = "blob";
-		}
-		else{
-			tiles[temp.column][temp.row].state = "start";
-			
-		}
-		
-		if(tiles[temp.column][temp.row].previous.state === "blob"){
-			tiles[temp.column][temp.row].previous.state = "blob";
-
-		}else{
-			tiles[temp.column][temp.row].previous.state = "empty";
-		}
-
-		temp_start = temp;
-  
-		setTimeout(abc, 800);
-	  };
-  
-	  abc();
-	});
-  }
-
-function displayNotice(message) {
-    var noticeDiv = document.getElementById("notice");
-
-    if (noticeDiv) {
-        // Append the new notice message to the existing content
-        noticeDiv.innerHTML += "<p>" + message + "</p>";
-    } else {
-        console.log(message);
-    }
-}
 
   //dung
 // function showPath() {
@@ -482,25 +427,140 @@ function Astar() {
 
 };
 
+function showPath() {
+	var temp = tiles[end[0]][end[1]];
+	var temp_start = tiles[start[0]][start[1]];
 
+	// if(isRobotRunning == false){
+	// 	start[0] = temp_start.column;
+	// 	start[1] = temp_start.row;
+	// 	return;
+	// }
+
+
+	console.log("Show path was called ");
+	
+	tiles[end[0]][end[1]].state = "end";
   
+	return new Promise((resolve) => {
+	  const abc = () => {
+		temp = tiles[end[0]][end[1]];
+		if (temp == temp_start || isRobotRunning == false) {
+			console.log(start[0], start[1]);
+			
+			// console.log(start)
+		//   tiles[temp.column][temp.row].state = "start";
+		//   tiles[temp.column][temp.row].previous.state = "empty";
+		  resolve(); // Resolve the promise when finished
+		  return;
+		}
+  
+		while (temp.previous != temp_start) {
+		  temp = temp.previous;
+		}
+			
+
+		if(tiles[temp.column][temp.row].state === "blob"){
+			//print on web that robot run through a important cell
+			displayNotice("Robot ran through an important cell at (" + (temp.row+1) + ", " + (temp.column+1) + ")");
+			tiles[temp.column][temp.row].state = "enterBlob";
+		}
+		else{
+			tiles[temp.column][temp.row].state = "start";
+			
+		}
+		
+		if(tiles[temp.column][temp.row].previous.state === "enterBlob"){
+			tiles[temp.column][temp.row].previous.state = "blob";
+
+		}else{
+			tiles[temp.column][temp.row].previous.state = "empty";
+		}
+
+		temp_start = temp;
+		start[0] = temp_start.column;
+		start[1] = temp_start.row;
+  
+		setTimeout(abc, 500);
+	  };
+  
+	  abc();
+	});
+  }
+
+function displayNotice(message) {
+    var noticeDiv = document.getElementById("notice");
+
+    if (noticeDiv) {
+        // Append the new notice message to the existing content
+        noticeDiv.innerHTML += "<p>" + message + "</p>";
+    } else {
+        console.log(message);
+    }
+}
+ 
+
+// async function runRobot() {
+// 	Astar();
+
+//         // Use await to wait for showPath to complete before moving to the next iteration
+// 	await new Promise(resolve => {
+// 		showPath();
+// 		// Resolve the promise after a delay, you may adjust the delay as needed
+// 		setTimeout(resolve, delay);
+// 	});
+
+//     for (let i = spot.length - 1; i >= 1; i--) {
+//         start = spot.pop();
+//         end = spot[i - 1];
+
+//         Astar();
+
+//         // Use await to wait for showPath to complete before moving to the next iteration
+//         await new Promise(resolve => {
+//             showPath();
+//             // Resolve the promise after a delay, you may adjust the delay as needed
+//             setTimeout(resolve, delay);
+//         });
+//     }
+// }
+
+let count = 1
 
 function runRobot(){
+	if(isRobotRunning == false){
+		isRobotRunning = true;
+	}
+
+	// isRobotRunning = true;
 	Astar();
 	// clearPath();
 	showPath().then(() => {
-		if(spot.length > 1){
+		if(isRobotRunning == false){
+		}
+		else if(spot.length > 1){
 			start = spot.pop();
 			end = spot[spot.length-1];
-			console.log(start);
-			console.log(end);
-			console.log(spot.length);
+			// console.log(start);
+			// console.log(end);
+			console.log(count+1);
 			runRobot();
 		}
-		// else if(robotWay == false){
-		// 	console.log("no way to [${end[0]}, ${end[1]}]");
-		// 	end = spot[spot.length-1];
-		// 	runRobot();
-		// }
 	  });
+}
+
+let isRobotRunning = true; // Declare isRunning as a global variable
+
+
+function stopRobot() {
+	isRobotRunning = false;
+    
+	console.log(isRobotRunning);
+	 // Set isRunning to false to stop the robot
+    // Update the current position to be the start point
+    // tiles[start[0]][start[1]].state = "empty";
+    // tiles[start[0]][start[1]].previous = null;
+    // start = [startPoint.row, startPoint.column];
+    // tiles[start[0]][start[1]].state = "start";
+    // tiles[start[0]][start[1]].previous = null;
 }
