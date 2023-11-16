@@ -145,6 +145,7 @@ function hurestics(a, b) {
 isRunning = true
 
 robotWay = true
+var openSet = []
 
 function Astar() {
 
@@ -168,7 +169,7 @@ function Astar() {
 	while (isRunning) {
 
 		if (openSet.length == 0) {
-			console.log("open set is empty")
+			console.log("open set is empty: ", openSet.length);
 			robotWay = false
 			// alert("open set is empty thus no solution")
 			break
@@ -436,6 +437,15 @@ function showPath() {
 	// 	start[1] = temp_start.row;
 	// 	return;
 	// }
+	console.log("openSet in showPath: ", openSet);
+	//if do not find robot way to the endPoint
+	// if(openSet.length == 1){
+	// 	console.log("openSet = 0");
+	// 	// spot.pop();
+	// 	// start[0] = start[0];
+	// 	// start[1] = start[1];
+	// 	return;
+	// }
 
 
 	console.log("Show path was called ");
@@ -445,6 +455,9 @@ function showPath() {
 	return new Promise((resolve) => {
 	  const abc = () => {
 		temp = tiles[end[0]][end[1]];
+
+		
+
 		if (temp == temp_start || isRobotRunning == false) {
 			console.log(start[0], start[1]);
 			
@@ -459,7 +472,7 @@ function showPath() {
 		  temp = temp.previous;
 		}
 			
-
+		//robot through colorBlob
 		if(tiles[temp.column][temp.row].state === "blob"){
 			//print on web that robot run through a important cell
 			displayNotice("Robot ran through an important cell at (" + (temp.row+1) + ", " + (temp.column+1) + ")");
@@ -469,10 +482,9 @@ function showPath() {
 			tiles[temp.column][temp.row].state = "start";
 			
 		}
-		
+		//return colorBlob pink color
 		if(tiles[temp.column][temp.row].previous.state === "enterBlob"){
 			tiles[temp.column][temp.row].previous.state = "blob";
-
 		}else{
 			tiles[temp.column][temp.row].previous.state = "empty";
 		}
@@ -539,7 +551,9 @@ function runRobot(){
 		if(isRobotRunning == false){
 		}
 		else if(spot.length > 1){
-			start = spot.pop();
+
+			spot.pop();
+			
 			end = spot[spot.length-1];
 			// console.log(start);
 			// console.log(end);
