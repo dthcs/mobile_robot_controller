@@ -14,7 +14,7 @@
 			<a href="https://github.com/dthcs" style="color:black; text-decoration: none;">GitHub Page</a>
 			<button onclick="runRobot()" class="astar">Run Robot</button>
 			<button onclick="stopRobot()">Stop</button>
-			<button>AI Voice</button>
+			<!-- <button>AI Voice</button> -->
 
 			<!-- <button onclick="dijkstras()">Run Dikjstra</button>
 			<button onclick="DFS()">Run DFS</button> -->
@@ -170,6 +170,19 @@
 			
 		</table>
 	</div>
+
+	<div>
+		<button id="click_hazard_record">Hazard AI Voice</button>
+    	<textarea name="" id="convert_text_hazard"></textarea>
+		
+	</div>
+
+	<div>
+		<button id="click_color_record">ColorBlob AI Voice</button>
+    	<textarea name="" id="convert_text_colorBlob"></textarea>
+		
+	</div>
+	
 	<div id="notice" class="notice"> Color Blob Notice: </div>
 
 	<!-- <div class="footer">
@@ -183,6 +196,7 @@
 	<script src="scripts/main.js"></script>
 	<script src="scripts/board.js"></script>
 	<script src="scripts/Astar.js"></script>
+	<script src="scripts/ai_voice.js"></script>
 	<!-- <script src="scripts/prims_maze_generation.js"></script>
 	<script src="scripts/recursive_backtracker.js"></script> -->
 	<!-- <script src="scripts/depthFirstSearch_MazeGenerator.js"></script> -->
