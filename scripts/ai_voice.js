@@ -1,12 +1,12 @@
-document.getElementById("click_hazard_record").addEventListener('click', function () {
-    handleButtonClick('hazardPoint');
+document.getElementById("click_record").addEventListener('click', function () {
+    handleButtonClick();
 });
 
-document.getElementById("click_color_record").addEventListener('click', function () {
-    handleButtonClick('colorBlobPoint');
-});
+// document.getElementById("click_color_record").addEventListener('click', function () {
+//     handleButtonClick('colorBlobPoint');
+// });
 
-function handleButtonClick(buttonId) {
+function handleButtonClick() {
     console.log("voice start");
     var speech = true;
 
@@ -47,6 +47,12 @@ function handleButtonClick(buttonId) {
         transcript = result[0].transcript; // Update the transcript with the final result
         console.log(transcript);
 
+        const dangerOrColor = transcript
+            .toLowerCase()
+            .split(' ');
+        console.log(dangerOrColor);
+        
+
         // Extract words from the recognized speech
         const words = transcript
             .toLowerCase()
@@ -60,17 +66,17 @@ function handleButtonClick(buttonId) {
             const column = wordToNumber[words[1]];
             console.log(row);
             console.log(column);
-            
+            document.getElementById("convert_text").innerHTML = transcript;
 
             // Update the input fields based on the button ID
-            if (buttonId === 'hazardPoint') {
+            if (dangerOrColor[0] == "danger") {
                 document.getElementById("hazardRowInput").value = row;
                 document.getElementById("hazardColumnInput").value = column;
-                document.getElementById("convert_text_hazard").innerHTML = transcript;
-            } else if (buttonId === 'colorBlobPoint') {
+                buttonId = 'hazardPoint';
+            } else if (dangerOrColor[0] == "color") {
                 document.getElementById("colorBlobRowInput").value = row;
                 document.getElementById("colorBlobColumnInput").value = column;
-                document.getElementById("convert_text_colorBlob").innerHTML = transcript;
+                buttonId = 'colorBlobPoint';
             }
 
             // Trigger the submission based on the button ID
