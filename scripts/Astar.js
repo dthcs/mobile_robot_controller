@@ -50,98 +50,6 @@ function hurestics(a, b) {
 	return dist1
 }
 
-// function showPath() {
-//     console.log("Show path was called ");
-//     var temp = tiles[end[0]][end[1]];
-//     var temp_start = tiles[start[0]][start[1]];
-//     // console.log(temp)
-//     tiles[end[0]][end[1]].state = "end";
-
-//     const abc = () => {
-//         temp = tiles[end[0]][end[1]];
-//         if (temp.previous == temp_start) {
-//             tiles[temp.column][temp.row].state = "start";
-//             tiles[temp.column][temp.row].previous.state = "empty";
-
-//             // Check if there are more endpoints in the spot array
-//             if (spot.length > 1) {
-//                 // Set the last element of the spot list as the new endpoint
-//                 start = spot.pop();
-//                 // Set the new start point
-//                 end = spot[length-1];
-
-//                 // Call Astar again for the new start and endpoint
-//                 setTimeout(Astar, delay);
-//             }
-//             return;
-//         }
-//         while (temp.previous != temp_start) {
-//             temp = temp.previous;
-//         }
-
-//         tiles[temp.column][temp.row].state = "start";
-//         tiles[temp.column][temp.row].previous.state = "empty";
-//         temp_start = temp;
-
-//         setTimeout(abc, 500);
-//     };
-//     abc();
-// }
-
-
-
-  //dung
-// function showPath() {
-// 	console.log("Show path was called ")
-// 	var temp = tiles[end[0]][end[1]]
-// 	var temp_start = tiles[start[0]][start[1]]
-// 	// console.log(temp)
-// 	tiles[end[0]][end[1]].state = "end"
-
-// 	const abc = () => {
-// 		temp = tiles[end[0]][end[1]]
-// 		if (temp.previous == temp_start) {
-// 			tiles[temp.column][temp.row].state = "start"
-// 			tiles[temp.column][temp.row].previous.state = "empty"
-// 			return
-// 		}
-// 		while(temp.previous != temp_start){
-// 			temp = temp.previous;
-// 		}
-		
-// 		tiles[temp.column][temp.row].state = "start"
-// 		tiles[temp.column][temp.row].previous.state = "empty"
-// 		temp_start = temp;
-// 		// tiles[end[0]][end[1]].state = "end"
-// 		// tiles[temp.column][temp.row].state = "path"
-// 		// temp = tiles[temp.column][temp.row].previous
-// 		// console.log(tiles[temp.column][temp.row])
-// 		setTimeout(abc, 500)
-// 		// tiles[temp.column][temp.row].state = "empty"
-// 	}
-// 	abc()
-	
-// }
-
-// function showPath() {
-// 	console.log("Show path was called ")
-// 	var temp = tiles[end[0]][end[1]]
-// 	console.log(temp)
-// 	tiles[end[0]][end[1]].state = "end"
-// 	const abc = () => {
-// 		tiles[end[0]][end[1]].state = "end"
-// 		if (!temp.previous) {
-// 			return
-// 		}
-// 		tiles[temp.column][temp.row].state = "path"
-// 		temp = tiles[temp.column][temp.row].previous
-// 		// console.log(tiles[temp.column][temp.row])
-// 		setTimeout(abc, 1000)
-// 	}
-// 	abc()
-
-// }
-
 isRunning = true
 
 robotWay = true
@@ -154,17 +62,6 @@ function Astar() {
 	var openSet = [tiles[start[0]][start[1]]]  // this is changed in these functinons :-  handelMouseMoveStart, resetMaze 
 	var closedSet = []
 	var isRunning = true
-
-
-	// This will clear any residual paath state cells from any previous session
-	// This is only for proper visualisarion and makes no effect on the actual function
-	// for (var c = 0; c < tileColumnCount; c++) {
-	// 	for (var r = 0; r < tileRowCount; r++) {
-	// 		if (tiles[c][r].state != "wall" && tiles[c][r].state != "start" && tiles[c][r].state != "end") {
-	// 			tiles[c][r].state = "empty"
-	// 		}
-	// 	}
-	// }
 
 	while (isRunning) {
 
@@ -200,56 +97,7 @@ function Astar() {
 			solved = true
 			isRunning = false
 		}
-		// 	clearPath()
-		// 	showPath()
-		// 	// setTimeout(showPath, delay)
-		// 	// setTimeout(() => {
-        //     //     showPath();
-        //     //     // After showing the path, check if there are more endpoints in the spot array
-        //     //     if (spot.length > 1) {
-		// 	// 		start = spot.pop();
-        //     //         // Pop the endpoint and set it as the new start point
-        //     //         end = spot[spot.length - 1];
-        //     //         Astar();
-        //     //     }
-        //     // }, delay);
-
-		// 	openSet = [];
-		// 	// if (spot.length > 1) {
-		// 	// 	// Set the last element of the spot list as the new endpoint
-		// 	// 	start = spot.pop();
-		// 	// 	// Set the new start point
-		// 	// 	end = spot[length-1];
-		// 	// 	// Astar();
-		// 	// }
-		// 	// else{
-		// 	return;
-		// 	// }
-		// }
-		// var selector = document.getElementById("Neighbours").value
-		// if (selector == "Diagonal Neighbours") {
-		// 	if (
-		// 		(currentNode.column - 1 == tiles[end[0]][end[1]].column
-		// 			&& currentNode.row == tiles[end[0]][end[1]].row)
-		// 		||
-		// 		(currentNode.column + 1 == tiles[end[0]][end[1]].column
-		// 			&& currentNode.row == tiles[end[0]][end[1]].row)
-		// 		||
-		// 		(currentNode.column == tiles[end[0]][end[1]].column
-		// 			&& currentNode.row - 1 == tiles[end[0]][end[1]].row)
-		// 		||
-		// 		(currentNode.column + 1 == tiles[end[0]][end[1]].column
-		// 			&& currentNode.row == tiles[end[0]][end[1]].row)
-		// 	) {
-		// 		solved = true
-		// 		isRunning = false
-		// 		clearPath()
-		// 		tiles[tiles[end[0]][end[1]].column][tiles[end[0]][end[1]].row].previous = tiles[currentNode.column][currentNode.row]
-		// 		setTimeout(showPath, delay)
-		// 		openSet = []
-		// 		return
-		// 	}
-		// }
+		
 		if (closedSet.length > tileRowCount * tileColumnCount) {
 			isRunning = false
 			solved = false
@@ -259,9 +107,7 @@ function Astar() {
 
 		removeElmentFromArray(openSet, currentNode)
 		closedSet.push(tiles[currentNode.column][currentNode.row])
-		// if (tiles[currentNode.column][currentNode.row].state != "start" && tiles[currentNode.column][currentNode.row].state != "end") {
-		// 	tiles[currentNode.column][currentNode.row].state = "visited"
-		// }
+
 		var neighbours = currentNode.neighbours
 		for (var i = 0; i < neighbours.length; i++) {
 			if (tiles[neighbours[i].column][neighbours[i].row].state != "wall" && (tiles[neighbours[i].column][neighbours[i].row].state != "end" || tiles[neighbours[i].column][neighbours[i].row] === tiles[end[0]][end[1]]) && !closedSet.includes(tiles[neighbours[i].column][neighbours[i].row])) {
@@ -280,152 +126,16 @@ function Astar() {
 					newPathBetter = true // since this will be the only path we have for the node
 					tiles[neighbours[i].column][neighbours[i].row].g = tempG
 					openSet.push(tiles[neighbours[i].column][neighbours[i].row])
-					// tiles[neighbours[i].column][neighbours[i].row].state = "open"
 				}
 
 				if (newPathBetter) {
 					tiles[neighbours[i].column][neighbours[i].row].h = hurestics(tiles[neighbours[i].column][neighbours[i].row], tiles[end[0]][end[1]])
 					tiles[neighbours[i].column][neighbours[i].row].f = tiles[neighbours[i].column][neighbours[i].row].g + tiles[neighbours[i].column][neighbours[i].row].h
 					tiles[neighbours[i].column][neighbours[i].row].previous = tiles[currentNode.column][currentNode.row]
-					// console.log(tiles[neighbours[i].column][neighbours[i].row].previous)
 				}
 			}
 		}
-		// setTimeout(recursiveFunction, delay)
 	}
-	// recursiveFunction()
-
-
-
-	
-
-	// const recursiveFunction = () => {
-
-	// 	if (openSet.length == 0) {
-	// 		console.log("open set is empty")
-	// 		// alert("open set is empty thus no solution")
-	// 		return
-	// 	}
-	// 	if (solved == true) {
-	// 		solved = false
-	// 		console.log("solved = true")
-	// 		openset = []
-	// 		return
-	// 	}
-	// 	if (!isRunning) {
-	// 		console.log("returning because isRunning is false")
-	// 		return
-	// 	}
-	// 	isRunning = true
-
-	// 	//  First we will find the node in the openset having the lowest f value
-	// 	minIndex = 0
-	// 	for (var i = 0; i < openSet.length; i++) {
-	// 		if (openSet[i].f < openSet[minIndex].f) {
-	// 			minIndex = i
-	// 		}
-	// 	}
-
-	// 	currentNode = openSet[minIndex]
-
-	// 	if (currentNode.column == tiles[end[0]][end[1]].column && currentNode.row == tiles[end[0]][end[1]].row) {
-	// 		solved = true
-	// 		isRunning = false
-	// 		clearPath()
-	// 		showPath()
-	// 		// setTimeout(showPath, delay)
-	// 		// setTimeout(() => {
-    //         //     showPath();
-    //         //     // After showing the path, check if there are more endpoints in the spot array
-    //         //     if (spot.length > 1) {
-	// 		// 		start = spot.pop();
-    //         //         // Pop the endpoint and set it as the new start point
-    //         //         end = spot[spot.length - 1];
-    //         //         Astar();
-    //         //     }
-    //         // }, delay);
-
-	// 		openSet = [];
-	// 		// if (spot.length > 1) {
-	// 		// 	// Set the last element of the spot list as the new endpoint
-	// 		// 	start = spot.pop();
-	// 		// 	// Set the new start point
-	// 		// 	end = spot[length-1];
-	// 		// 	// Astar();
-	// 		// }
-	// 		// else{
-	// 		return;
-	// 		// }
-	// 	}
-	// 	// var selector = document.getElementById("Neighbours").value
-	// 	// if (selector == "Diagonal Neighbours") {
-	// 	// 	if (
-	// 	// 		(currentNode.column - 1 == tiles[end[0]][end[1]].column
-	// 	// 			&& currentNode.row == tiles[end[0]][end[1]].row)
-	// 	// 		||
-	// 	// 		(currentNode.column + 1 == tiles[end[0]][end[1]].column
-	// 	// 			&& currentNode.row == tiles[end[0]][end[1]].row)
-	// 	// 		||
-	// 	// 		(currentNode.column == tiles[end[0]][end[1]].column
-	// 	// 			&& currentNode.row - 1 == tiles[end[0]][end[1]].row)
-	// 	// 		||
-	// 	// 		(currentNode.column + 1 == tiles[end[0]][end[1]].column
-	// 	// 			&& currentNode.row == tiles[end[0]][end[1]].row)
-	// 	// 	) {
-	// 	// 		solved = true
-	// 	// 		isRunning = false
-	// 	// 		clearPath()
-	// 	// 		tiles[tiles[end[0]][end[1]].column][tiles[end[0]][end[1]].row].previous = tiles[currentNode.column][currentNode.row]
-	// 	// 		setTimeout(showPath, delay)
-	// 	// 		openSet = []
-	// 	// 		return
-	// 	// 	}
-	// 	// }
-	// 	if (closedSet.length > tileRowCount * tileColumnCount) {
-	// 		isRunning = false
-	// 		solved = false
-	// 		console.log("Algorithm checking for more than possible case this is a bug and needs to be fixed")
-	// 		return
-	// 	}
-
-	// 	removeElmentFromArray(openSet, currentNode)
-	// 	closedSet.push(tiles[currentNode.column][currentNode.row])
-	// 	if (tiles[currentNode.column][currentNode.row].state != "start" && tiles[currentNode.column][currentNode.row].state != "end") {
-	// 		tiles[currentNode.column][currentNode.row].state = "visited"
-	// 	}
-	// 	var neighbours = currentNode.neighbours
-	// 	for (var i = 0; i < neighbours.length; i++) {
-	// 		if (tiles[neighbours[i].column][neighbours[i].row].state != "wall" && (tiles[neighbours[i].column][neighbours[i].row].state != "end" || tiles[neighbours[i].column][neighbours[i].row] === tiles[end[0]][end[1]]) && !closedSet.includes(tiles[neighbours[i].column][neighbours[i].row])) {
-	// 			var tempG = tiles[currentNode.column][currentNode.row].g + hurestics(tiles[currentNode.column][currentNode.row], tiles[neighbours[i].column][neighbours[i].row])
-	// 			var newPathBetter = false
-
-	// 			if (openSet.includes(tiles[neighbours[i].column][neighbours[i].row])) {
-	// 				//  this block will run only of the node is already in the open set meaning we already have a path for this node
-	// 				//  the hurestic will remain the same but the value of g will be differet
-	// 				// we should change this value only if the g value is lesser than the already existing g value
-	// 				if (tempG < tiles[neighbours[i].column][neighbours[i].row].g) {
-	// 					newPathBetter = true
-	// 					tiles[neighbours[i].column][neighbours[i].row].g = tempG
-	// 				}
-	// 			} else {
-	// 				newPathBetter = true // since this will be the only path we have for the node
-	// 				tiles[neighbours[i].column][neighbours[i].row].g = tempG
-	// 				openSet.push(tiles[neighbours[i].column][neighbours[i].row])
-	// 				tiles[neighbours[i].column][neighbours[i].row].state = "open"
-	// 			}
-
-	// 			if (newPathBetter) {
-	// 				tiles[neighbours[i].column][neighbours[i].row].h = hurestics(tiles[neighbours[i].column][neighbours[i].row], tiles[end[0]][end[1]])
-	// 				tiles[neighbours[i].column][neighbours[i].row].f = tiles[neighbours[i].column][neighbours[i].row].g + tiles[neighbours[i].column][neighbours[i].row].h
-	// 				tiles[neighbours[i].column][neighbours[i].row].previous = tiles[currentNode.column][currentNode.row]
-	// 				// console.log(tiles[neighbours[i].column][neighbours[i].row].previous)
-	// 			}
-	// 		}
-	// 	}
-	// 	setTimeout(recursiveFunction, delay)
-	// }
-	// recursiveFunction()
-
 };
 
 function showPath() {
@@ -460,12 +170,8 @@ function showPath() {
 
 		if (temp == temp_start || isRobotRunning == false) {
 			console.log(start[0], start[1]);
-			
-			// console.log(start)
-		//   tiles[temp.column][temp.row].state = "start";
-		//   tiles[temp.column][temp.row].previous.state = "empty";
-		  resolve(); // Resolve the promise when finished
-		  return;
+			resolve(); // Resolve the promise when finished
+			return;
 		}
   
 		while (temp.previous != temp_start) {
@@ -510,32 +216,6 @@ function displayNotice(message) {
         console.log(message);
     }
 }
- 
-
-// async function runRobot() {
-// 	Astar();
-
-//         // Use await to wait for showPath to complete before moving to the next iteration
-// 	await new Promise(resolve => {
-// 		showPath();
-// 		// Resolve the promise after a delay, you may adjust the delay as needed
-// 		setTimeout(resolve, delay);
-// 	});
-
-//     for (let i = spot.length - 1; i >= 1; i--) {
-//         start = spot.pop();
-//         end = spot[i - 1];
-
-//         Astar();
-
-//         // Use await to wait for showPath to complete before moving to the next iteration
-//         await new Promise(resolve => {
-//             showPath();
-//             // Resolve the promise after a delay, you may adjust the delay as needed
-//             setTimeout(resolve, delay);
-//         });
-//     }
-// }
 
 let count = 1
 
@@ -570,11 +250,4 @@ function stopRobot() {
 	isRobotRunning = false;
     
 	console.log(isRobotRunning);
-	 // Set isRunning to false to stop the robot
-    // Update the current position to be the start point
-    // tiles[start[0]][start[1]].state = "empty";
-    // tiles[start[0]][start[1]].previous = null;
-    // start = [startPoint.row, startPoint.column];
-    // tiles[start[0]][start[1]].state = "start";
-    // tiles[start[0]][start[1]].previous = null;
 }
