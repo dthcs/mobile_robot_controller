@@ -14,37 +14,18 @@
 			<a href="https://github.com/dthcs" style="color:black; text-decoration: none;">GitHub Page</a>
 			<button onclick="runRobot()" class="astar">Run Robot</button>
 			<button onclick="stopRobot()">Stop</button>
-			<!-- <button>AI Voice</button> -->
 
-			<!-- <button onclick="dijkstras()">Run Dikjstra</button>
-			<button onclick="DFS()">Run DFS</button> -->
 			<br />
 
-			<!-- <button onclick="recursiveBacktracker()">Run Recursive backtracker maze generation</button> -->
-			<!-- <button onclick="DFS_MazeGenerator()">Run DFS maze generation</button> -->
-		
-			<!-- <br />	
-			<button onclick="createVerticalmaze()">Create a vertical Maze</button>
-			<button onclick="createHorizontalMaze()">Create a Horizontal Maze</button>
-			<button onclick="createDiagonalMaze()">Create a Diagonal Maze</button>
-			<button onclick="createSpiralMaze()">Create a Spiral Maze</button>
-	
-			<br /> -->
 			<button id="reset" onclick="resetMaze()">Reset Maze</button>
 			<button id="reset" onclick="clearPath()">Clear Path</button>
-			<!-- <button id="reset" onclick="randomMaze()">Generate a random Maze</button>
-			<button onclick="createBlackMaze()">Cover entire maze</button> -->
 			<br />
 
 			
 			<span class="selector">
 				<label for="distance" class="nav-link active pr-1">Distance Measure</label>
 				<select class="form-control" id="distance"  >
-					<!-- <option>Euclidean Distance</option> -->
 					<option>Manhattan Distance</option>
-					<!-- <option>Chess Board Distance</option>
-					<option>Camberaa Distance</option>
-					<option>Cosine Distance</option> -->
 				</select>
 			</span>
 
@@ -63,16 +44,6 @@
 
 
 		<table>
-			<!-- <tr>
-				<td>
-					Set delay in milli seconds:
-				</td>
-				<td>
-					<input type="number" onchange="handelSpeedChange(value)"  placeholder="delay = 5ms default" />
-				</td>
-			</tr> -->
-
-			<!-- Map size -->
 			<tr>
 				<td>
 					Map Size 
@@ -150,24 +121,6 @@
 					<button onclick="handleSubmit('colorBlobPoint')">Submit</button>
 				</td>
 			</tr>
-
-			<!-- <tr>
-				<td>
-					Prob. threshold for random maze:  
-				</td>
-				<td>
-					<input type="number" onchange="handelThresholdChange(value)"  placeholder="Threshold = 0.2 by default" />
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Cell seperation : 
-				</td>
-				<td>
-					<input type="number" onchange="handelCellSeperationChange(value)"  placeholder="Cell Seperation = 1px by default" />
-				</td>
-			</tr> -->
-			
 		</table>
 	</div>
 
@@ -179,23 +132,11 @@
 
 	
 	<div id="notice" class="notice"> Color Blob Notice: </div>
-
-	<!-- <div class="footer">
-		<div>Made by H2 Team</div>
-		<div>
-			<a href="https://github.com/dthcs">GitHub Page</a>
-		</div>
-	</div> -->
 	
 	
 	<script src="scripts/main.js"></script>
 	<script src="scripts/board.js"></script>
 	<script src="scripts/Astar.js"></script>
 	<script src="scripts/ai_voice.js"></script>
-	<!-- <script src="scripts/prims_maze_generation.js"></script>
-	<script src="scripts/recursive_backtracker.js"></script> -->
-	<!-- <script src="scripts/depthFirstSearch_MazeGenerator.js"></script> -->
-	<!-- <script src="scripts/Dijkstra.js"></script>
-	<script src="scripts/DepthFirstSearch.js"></script> -->
 </body>
 </html>

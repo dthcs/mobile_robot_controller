@@ -20,14 +20,10 @@ cellSeperation = 1
 tileW = 20; //box width
 tileH = 20;
 
-//...
 let boundX = 0
 let boundY = 0
 
-// let start = [2, Math.floor(tileRowCount / 2)] //x, y
 var start = [1,1]
-// let end = [[]]
-// let end = [tileColumnCount - 3, Math.floor(tileRowCount / 2)]
 var end = []
 var spot = []
 
@@ -69,9 +65,6 @@ function handleSubmit(submitType) {
     else if (submitType == 'colorBlobPoint') {
         handleColorBlobPoint(colorBlobRowValue, colorBlobColumnValue);
     }
-
-    // Display the size of the map
-    // displayMapSize();
 }
 
 function displayMapSize() {
@@ -88,8 +81,6 @@ function handleRowChange(rows) {
     rows = rows > 1 ? rows : 1
     tiles = []
     tileRowCount = rows
-    // end = [tileColumnCount - 1, rows - 1]
-    // start = [0, 0]
     canvas.height = (tileH + cellSeperation) * (tileRowCount) - cellSeperation
     canvas.width = (tileW + cellSeperation) * (tileColumnCount) - cellSeperation
 
@@ -112,16 +103,12 @@ function handleRowChange(rows) {
             tiles[c][r].neighbours = neighbours
         }
     }
-    // tiles[end[0]][end[1]].state = "end"
-    // tiles[start[0]][start[1]].state = "start"
 }
 
 function handleColumnChange(columns) {
     columns = columns > 0 ? columns : 1
     tiles = []
     tileColumnCount = columns
-    // end = [columns - 1, tileRowCount - 1]
-    // start = [0, 0]
     canvas.height = (tileH + cellSeperation) * (tileRowCount) - cellSeperation
     canvas.width = (tileW + cellSeperation) * (tileColumnCount) - cellSeperation
     for (var c = 0; c < tileColumnCount; c++) {
@@ -144,8 +131,6 @@ function handleColumnChange(columns) {
             tiles[c][r].neighbours = neighbours
         }
     }
-    // tiles[end[0]][end[1]].state = "end"
-    // tiles[start[0]][start[1]].state = "start"
 }
 
 //handle startPoint
@@ -205,22 +190,6 @@ function handleColorBlobPoint(r, c){
     }
 }
 
-// function handleEndPoint(r, c) {
-
-//     if(r < tileRowCount && c < tileColumnCount){
-
-//         if (tiles[c][r].state !== "start") {
-//             // tiles[end[0]][end[1]].state = "empty";
-//             // spot.push([c,r]);
-//             // console.log(spot);
-//             end[0] = c;
-//             end[1] = r;
-            
-//             tiles[c][r].state = tiles[c][r].state == "empty" ? "end" : "empty";
-//             console.log("changing the end position");
-//         }
-//     }
-// }
 
 function handelMouseMoveEnd(e) {
     let x = e.pageX - canvas.offsetLeft;
@@ -239,43 +208,6 @@ function handelMouseMoveEnd(e) {
         }
     }
 }
-
-// function handelMouseMove(e) {
-//     let x = e.pageX - canvas.offsetLeft;
-//     let y = e.pageY - canvas.offsetTop;
-//     for (var c = 0; c < tileColumnCount; c++) {
-//         for (var r = 0; r < tileRowCount; r++) {
-//             if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != boundX || r != boundY)) {
-//                 if (tiles[c][r].state != "start" && tiles[c][r].state != "end") {
-//                     tiles[c][r].state = tiles[c][r].state == "empty" ? "wall" : "empty"
-//                     boundX = c
-//                     boundY = r
-//                 }
-//             }
-//         }
-//     }
-// }
-
-
-// function handleStartPoint(e) {
-
-//     let x = e.pageX - canvas.offsetLeft;
-//     let y = e.pageY - canvas.offsetTop;
-//     for (var c = 0; c < tileColumnCount; c++) {
-//         for (var r = 0; r < tileRowCount; r++) {
-//             if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != start[0] || r != start[1])) {
-//                 if (tiles[c][r].state != "end") {
-//                     tiles[start[0]][start[1]].state = "empty"
-//                     start[0] = c
-//                     start[1] = r
-//                     openSet = [tiles[start[0]][start[1]]]  // only for Astar
-//                     tiles[c][r].state = "start"
-//                     console.log("changing the start position")
-//                 }
-//             }
-//         }
-//     }
-// }
 
 
 //...
@@ -331,13 +263,6 @@ const handelNeighboursChange = () => {
 }
 
 handelNeighboursChange()
-
-// console.log("tiles = ", tiles)
-
-
-// tiles[start[0]][start[1]].state = "start";
-// tiles[end[0]][end[1]].state = "end";
-
 
 //color the cells
 function rect(x, y, w, h, state) {
@@ -401,164 +326,7 @@ function init() {
 init()
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-// function createVerticalmaze() {
 
-//     for (var c = 0; c < tileColumnCount; c++) {
-//         for (var r = 0; r < tileRowCount; r++) {
-//             tiles[c][r].state = "empty"
-//         }
-//     }
-//     for (var c = 0; c < tileColumnCount; c++) {
-//         for (var r = 0; r < tileRowCount; r++) {
-//             if (c % 3 == 1) {
-//                 tiles[c][r].state = "wall"
-//                 if (r == 0 && c % 3 == 1) {
-//                     tiles[c][r].state = "empty"
-//                 }
-
-//                 if (r == tileRowCount - 1 && c % 6 == 1) {
-//                     tiles[c][0].state = "wall"
-//                     tiles[c][r].state = "empty"
-//                 }
-
-//             }
-//         }
-//     }
-//     tiles[0][0].state = "start"
-//     tiles[tileColumnCount - 1][tileRowCount - 1].state = "end"
-//     end[0] = tileColumnCount - 1
-//     end[1] = tileRowCount - 1
-//     start[0] = 0
-//     start[1] = 0
-// }
-
-// function createHorizontalMaze() {
-//     for (var c = 0; c < tileColumnCount; c++) {
-//         for (var r = 0; r < tileRowCount; r++) {
-//             tiles[c][r].state = "empty"
-//         }
-//     }
-//     for (var c = 0; c < tileColumnCount; c++) {
-//         for (var r = 0; r < tileRowCount; r++) {
-//             if (r % 3 == 1) {
-//                 tiles[c][r].state = "wall"
-//                 tiles[tileColumnCount - 1][r].state = "empty"
-//                 tiles[0][r].state = "empty"
-
-//                 if (r % 3 == 1 && r % 6 != 1) {
-//                     tiles[c][r].state = "wall"
-//                 }
-//                 if (r % 6 == 1) {
-//                     tiles[0][r].state = "wall"
-//                 }
-
-//             }
-//         }
-//     }
-//     tiles[0][0].state = "start"
-//     tiles[tileColumnCount - 1][tileRowCount - 1].state = "end"
-//     end[0] = tileColumnCount - 1
-//     end[1] = tileRowCount - 1
-//     start[0] = 0
-//     start[1] = 0
-// }
-
-// function createDiagonalMaze() {
-//     for (var c = 0; c < tileColumnCount; c++) {
-//         for (var r = 0; r < tileRowCount; r++) {
-//             tiles[c][r].state = "empty"
-//         }
-//     }
-
-//     for (var c = 0; c < tileColumnCount; c++) {
-//         for (var r = 0; r < tileRowCount; r++) {
-//             if ((r + c) % 3 == 0) {
-//                 tiles[c][r].state = "wall"
-//             }
-//             if (c % 3 == 0 && c % 6 != 0) {
-//                 tiles[c][0].state = "empty"
-//             }
-//             if (r % 6 == 0) {
-//                 tiles[0][r].state = "empty"
-//             }
-//             if (c % 6 == 0) {
-//                 tiles[c][tileRowCount - 1].state = "empty"
-//             }
-//             if (r % 2 == 0) {
-//                 console.log("print")
-//                 tiles[tileColumnCount - 1][r].state = "empty"
-//             }
-//         }
-//     }
-//     tiles[0][0].state = "start"
-//     tiles[tileColumnCount - 1][tileRowCount - 1].state = "end"
-//     end[0] = tileColumnCount - 1
-//     end[1] = tileRowCount - 1
-//     start[0] = 0
-//     start[1] = 0
-
-// }
-
-// function createSpiralMaze() {
-
-//     for (var c = 0; c < tileColumnCount; c++) {
-//         for (var r = 0; r < tileRowCount; r++) {
-//             tiles[c][r].state = "wall"
-//         }
-//     }
-
-//     let upperBound = 0
-//     let lowerBound = tileRowCount - 1
-//     let leftBound = 0
-//     let rightBound = tileColumnCount - 1
-
-//     let right = 0
-//     let down = 1
-//     let left = 2
-//     let up = 3
-//     let direction = 0
-//     while (upperBound <= lowerBound && leftBound <= rightBound) {
-//         console.log(" ----------------------------------------- ")
-//         console.log("UpperBound = ", upperBound)
-//         console.log("lowerBound = ", lowerBound)
-//         console.log(" ")
-//         console.log("leftBound = ", leftBound)
-//         console.log("rightBound = ", rightBound)
-
-//         if (direction == right) {
-//             for (let i = leftBound - 2 >= 0 ? leftBound - 2 : 0; i <= rightBound; i++) {
-//                 tiles[i][upperBound].state = "empty"
-//             }
-//             direction = down
-//             upperBound += 2
-//         }
-//         else if (direction == down) {
-//             for (let i = upperBound - 2; i <= lowerBound; i++) {
-//                 tiles[rightBound][i].state = "empty"
-//             }
-//             direction = left
-//             rightBound -= 2
-//         }
-//         else if (direction == left) {
-//             for (let i = leftBound; i <= rightBound + 2; i++) {
-//                 tiles[i][lowerBound].state = "empty"
-//             }
-//             direction = up
-//             lowerBound -= 2
-//         }
-//         else if (direction == up) {
-//             for (let i = upperBound; i <= lowerBound + 2; i++) {
-//                 tiles[leftBound][i].state = "empty"
-//             }
-//             direction = right
-//             leftBound += 2
-//         }
-//     }
-//     tiles[0][0].state = "start"
-//     tiles[Math.floor(tileColumnCount / 2)][Math.floor(tileRowCount / 2)].state = "end"
-//     end = [Math.floor(tileColumnCount / 2), Math.floor(tileRowCount / 2)]
-//     start = [0, 0]
-// }
 
 function clearPath() {
     for (var c = 0; c < tileColumnCount; c++) {
@@ -568,9 +336,6 @@ function clearPath() {
             }
         }
     }
-    // tiles[start[0]][start[1]].state = "start"
-    // tiles[end[0]][end[1]].state = "end"
-
 }
 
 
@@ -589,72 +354,6 @@ function resetMaze() {
     tiles[start[0]][start[1]].state = "start"
     tiles[end[0]][end[1]].state = "end"
 }
-
-// function randomMaze() {
-//     var chance
-//     for (var c = 0; c < tileColumnCount; c++) {
-//         for (var r = 0; r < tileRowCount; r++) {
-
-//             if (tiles[c][r].state != "start" && tiles[c][r].state != "end") {
-
-//                 chance = Math.random()
-//                 tiles[c][r].state = chance < threshold ? "wall" : "empty"
-//             }
-//         }
-//     }
-//     for (var c = 0; c < tileColumnCount; c++) {
-//         for (var r = 0; r < tileRowCount; r++) {
-//             var neighbours = []
-
-//             if (c > 0) { neighbours.push(tiles[c - 1][r]) }
-//             if (r > 0) { neighbours.push(tiles[c][r - 1]) }
-//             if (c < tileColumnCount - 1) { neighbours.push(tiles[c + 1][r]) }
-//             if (r < tileRowCount - 1) { neighbours.push(tiles[c][r + 1]) }
-
-//             tiles[c][r].neighbours = neighbours
-//         }
-//     }
-// }
-
-// function handelMouseMoveStart(e) {
-
-//     let x = e.pageX - canvas.offsetLeft;
-//     // console.log(x)
-//     let y = e.pageY - canvas.offsetTop;
-//     for (var c = 0; c < tileColumnCount; c++) {
-//         for (var r = 0; r < tileRowCount; r++) {
-//             if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != start[0] || r != start[1])) {
-//                 console.log(c)
-//                 if (tiles[c][r].state != "end") {
-//                     tiles[start[0]][start[1]].state = "empty"
-//                     start[0] = c
-//                     start[1] = r
-//                     openSet = [tiles[start[0]][start[1]]]  // only for Astar
-//                     tiles[c][r].state = "start"
-//                     console.log("changing the start position")
-//                 }
-//             }
-//         }
-//     }
-// }
-
-// function handelMouseMoveEnd(e) {
-//     let x = e.pageX - canvas.offsetLeft;
-//     let y = e.pageY - canvas.offsetTop;
-//     console.log("end is being moved")
-//     for (var c = 0; c < tileColumnCount; c++) {
-//         for (var r = 0; r < tileRowCount; r++) {
-//             if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != start[0] || r != start[1])) {
-//                 if (tiles[c][r].state != "start") {
-//                     tiles[end[0]][end[1]].state = "empty"
-//                     end[0] = c
-//                     end[1] = r
-//                     tiles[c][r].state = "end"
-//                 }
-//             }
-//         }
-//     }
-// }
 
 function handelMouseMove(e) {
     let x = e.pageX - canvas.offsetLeft;

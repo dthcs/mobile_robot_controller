@@ -2,10 +2,6 @@ document.getElementById("click_record").addEventListener('click', function () {
     handleButtonClick();
 });
 
-// document.getElementById("click_color_record").addEventListener('click', function () {
-//     handleButtonClick('colorBlobPoint');
-// });
-
 function handleButtonClick() {
     console.log("voice start");
     var speech = true;
@@ -73,14 +69,17 @@ function handleButtonClick() {
                 document.getElementById("hazardRowInput").value = row;
                 document.getElementById("hazardColumnInput").value = column;
                 buttonId = 'hazardPoint';
+                // Trigger the submission based on the button ID
+                handleSubmit(buttonId);
             } else if (dangerOrColor[0] == "color") {
                 document.getElementById("colorBlobRowInput").value = row;
                 document.getElementById("colorBlobColumnInput").value = column;
                 buttonId = 'colorBlobPoint';
+                // Trigger the submission based on the button ID
+                handleSubmit(buttonId);
             }
 
-            // Trigger the submission based on the button ID
-            handleSubmit(buttonId);
+            
         }
 
         
