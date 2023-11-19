@@ -1,53 +1,5 @@
-
-
-//  helper Hurestics Function
-function hurestics(a, b) {
-	//  Euclidean distance
-	var distMeasure = document.getElementById("distance")
-	distMeasure = distMeasure.value
-	// console.log("distance  = ", distMeasure)
-
-	if (distMeasure) {
-		var dist1 = Math.pow((Math.pow((a.column - b.column), 2) + Math.pow(a.row - b.row, 2)), 1)
-	}
-	var dist1
-	switch (distMeasure) {
-		case "Euclidean Distance":
-			// console.log("euc")
-			return Math.pow((Math.pow((a.column - b.column), 2) + Math.pow(a.row - b.row, 2)), 2)
-
-		case "Manhattan Distance":
-			// console.log("man distance")
-			return Math.abs(a.column - b.column) + Math.abs(a.row - b.row)
-		case "Chess Board Distance":
-			// console.log("chess dist")
-			return Math.max(Math.abs(a.column - b.column), Math.abs(a.row - b.row))
-
-		case "Camberaa Distance":
-			let a1 = a.column - b.column
-			let a2 = a.column + b.column
-			let a3 = a1 / a2
-			let b1 = a.row - b.row
-			let b2 = a.row + b.row
-			let b3 = b1 / b2
-			return a3 + b3
-		case "Cosine Distance":
-			var a11 = a.column * b.column
-			var a22 = a.row * b.row
-			var a33 = a11 + a22
-
-			var a4 = a.column * a.column + a.row * a.row
-			var a5 = b.column * b.column + b.row * b.row
-
-			var a6 = a33 / (Math.pow(a4, 0.5) * Math.pow(a5, 0.5))
-			return a6
-
-		default:
-			// console.log("default dist")
-			return Math.pow((Math.pow((a.column - b.column), 2) + Math.pow(a.row - b.row, 2)), 2)
-	}
-
-	return dist1
+function heuristics(a, b) {
+	return Math.abs(a.column - b.column) + Math.abs(a.row - b.row)
 }
 
 isRunning = true
@@ -111,7 +63,7 @@ function Astar() {
 		var neighbours = currentNode.neighbours
 		for (var i = 0; i < neighbours.length; i++) {
 			if (tiles[neighbours[i].column][neighbours[i].row].state != "wall" && (tiles[neighbours[i].column][neighbours[i].row].state != "end" || tiles[neighbours[i].column][neighbours[i].row] === tiles[end[0]][end[1]]) && !closedSet.includes(tiles[neighbours[i].column][neighbours[i].row])) {
-				var tempG = tiles[currentNode.column][currentNode.row].g + hurestics(tiles[currentNode.column][currentNode.row], tiles[neighbours[i].column][neighbours[i].row])
+				var tempG = tiles[currentNode.column][currentNode.row].g + heuristics(tiles[currentNode.column][currentNode.row], tiles[neighbours[i].column][neighbours[i].row])
 				var newPathBetter = false
 
 				if (openSet.includes(tiles[neighbours[i].column][neighbours[i].row])) {
@@ -129,7 +81,7 @@ function Astar() {
 				}
 
 				if (newPathBetter) {
-					tiles[neighbours[i].column][neighbours[i].row].h = hurestics(tiles[neighbours[i].column][neighbours[i].row], tiles[end[0]][end[1]])
+					tiles[neighbours[i].column][neighbours[i].row].h = heuristics(tiles[neighbours[i].column][neighbours[i].row], tiles[end[0]][end[1]])
 					tiles[neighbours[i].column][neighbours[i].row].f = tiles[neighbours[i].column][neighbours[i].row].g + tiles[neighbours[i].column][neighbours[i].row].h
 					tiles[neighbours[i].column][neighbours[i].row].previous = tiles[currentNode.column][currentNode.row]
 				}
@@ -223,10 +175,7 @@ function runRobot(){
 	if(isRobotRunning == false){
 		isRobotRunning = true;
 	}
-
-	// isRobotRunning = true;
 	Astar();
-	// clearPath();
 	showPath().then(() => {
 		if(isRobotRunning == false){
 		}
@@ -235,8 +184,6 @@ function runRobot(){
 			spot.pop();
 			
 			end = spot[spot.length-1];
-			// console.log(start);
-			// console.log(end);
 			console.log(count+1);
 			runRobot();
 		}

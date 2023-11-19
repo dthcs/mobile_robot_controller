@@ -191,7 +191,7 @@ function handleColorBlobPoint(r, c){
 }
 
 
-function handelMouseMoveEnd(e) {
+function handleMouseMoveEnd(e) {
     let x = e.pageX - canvas.offsetLeft;
     let y = e.pageY - canvas.offsetTop;
     console.log("end is being moved")
@@ -211,7 +211,7 @@ function handelMouseMoveEnd(e) {
 
 
 //...
-function handelCellSeperationChange(value) {
+function handleCellSeperationChange(value) {
     value = value >= 0 ? value : 0
     cellSeperation = Number(value)
     console.log("Cell Seperation = ", cellSeperation)
@@ -239,30 +239,30 @@ for (var c = 0; c < tileColumnCount; c++) {
 //find path
 //  Adding neighbours to the tiles
 //algorithm run
-const handelNeighboursChange = () => {
-    var selector = document.getElementById("Neighbours").value
+const handleNeighboursChange = () => {
+    // var selector = document.getElementById("Neighbours").value
     console.log("inti neighbours was called")
     for (var c = 0; c < tileColumnCount; c++) {
         for (var r = 0; r < tileRowCount; r++) {
             var neighbours = []
-            if (selector === "4-Adjcent Neighbours" || selector === "All 8 Neighbours") {
-                if (c > 0) { neighbours.push(tiles[c - 1][r]) }
-                if (r > 0) { neighbours.push(tiles[c][r - 1]) }
-                if (c < tileColumnCount - 1) { neighbours.push(tiles[c + 1][r]) }
-                if (r < tileRowCount - 1) { neighbours.push(tiles[c][r + 1]) }
-            }
-            if (selector === "Diagonal Neighbours" || selector === "All 8 Neighbours") {
-                if (c > 0 && r > 0) { neighbours.push(tiles[c - 1][r - 1]) }
-                if (c > 0 && r < tileRowCount - 1) { neighbours.push(tiles[c - 1][r + 1]) }
-                if (c < tileColumnCount - 1 && r > 0) { neighbours.push(tiles[c + 1][r - 1]) }
-                if (c < tileColumnCount - 1 && r < tileRowCount - 1) { neighbours.push(tiles[c + 1][r + 1]) }
-            }
+            // if (selector === "4-Adjcent Neighbours" || selector === "All 8 Neighbours") {
+            if (c > 0) { neighbours.push(tiles[c - 1][r]) }
+            if (r > 0) { neighbours.push(tiles[c][r - 1]) }
+            if (c < tileColumnCount - 1) { neighbours.push(tiles[c + 1][r]) }
+            if (r < tileRowCount - 1) { neighbours.push(tiles[c][r + 1]) }
+            // }
+            // if (selector === "Diagonal Neighbours" || selector === "All 8 Neighbours") {
+            //     if (c > 0 && r > 0) { neighbours.push(tiles[c - 1][r - 1]) }
+            //     if (c > 0 && r < tileRowCount - 1) { neighbours.push(tiles[c - 1][r + 1]) }
+            //     if (c < tileColumnCount - 1 && r > 0) { neighbours.push(tiles[c + 1][r - 1]) }
+            //     if (c < tileColumnCount - 1 && r < tileRowCount - 1) { neighbours.push(tiles[c + 1][r + 1]) }
+            // }
             tiles[c][r].neighbours = neighbours
         }
     }
 }
 
-handelNeighboursChange()
+handleNeighboursChange()
 
 //color the cells
 function rect(x, y, w, h, state) {
@@ -324,84 +324,3 @@ function init() {
     window.requestAnimationFrame(draw)
 }
 init()
-
-// ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-function clearPath() {
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            if (tiles[c][r].state != "wall" && tiles[c][r].state != "start" && tiles[c][r].state != "end") {
-                tiles[c][r].state = "empty"
-            }
-        }
-    }
-}
-
-
-function resetMaze() {
-    isRunning = true
-    solved = false
-    openSet = [tiles[start[0]][start[1]]]   // only for Astar 
-    closedSet = [] // only for Astar
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            if (tiles[c][r].state != "start" && tiles[c][r].state != "end") {
-                tiles[c][r].state = "empty"
-            }
-        }
-    }
-    tiles[start[0]][start[1]].state = "start"
-    tiles[end[0]][end[1]].state = "end"
-}
-
-function handelMouseMove(e) {
-    let x = e.pageX - canvas.offsetLeft;
-    let y = e.pageY - canvas.offsetTop;
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH & (c != boundX || r != boundY)) {
-                if (tiles[c][r].state != "start" && tiles[c][r].state != "end") {
-                    tiles[c][r].state = tiles[c][r].state == "empty" ? "wall" : "empty"
-                    boundX = c
-                    boundY = r
-                }
-            }
-        }
-    }
-}
-
-function handelMouseDown(e) {
-    clearPath()
-    canvas.onmousemove = handelMouseMove;
-    let x = e.pageX - canvas.offsetLeft;
-    let y = e.pageY - canvas.offsetTop;
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            if (c * (tileW + cellSeperation) < x && x < c * (tileW + cellSeperation) + tileW && r * (tileH + cellSeperation) < y && y < r * (tileH + cellSeperation) + tileH) {
-                if (tiles[c][r].state != "start" && tiles[c][r].state != "end") {
-                    tiles[c][r].state = tiles[c][r].state == "empty" ? "wall" : "empty"
-                    boundX = c
-                    boundY = r
-                }
-                else {
-                    if (tiles[c][r].state == "start") {
-                        canvas.onmousemove = handelMouseMoveStart;
-                    } else {
-                        canvas.onmousemove = handelMouseMoveEnd;
-                    }
-
-                }
-            }
-        }
-    }
-}
-
-function handelMouseUp(e) {
-    clearPath()
-    canvas.onmousemove = null;
-}
-
-
-canvas.onmousedown = handelMouseDown;
-canvas.onmouseup = handelMouseUp

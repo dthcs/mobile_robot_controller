@@ -17,26 +17,13 @@
 
 			<br />
 
-			<button id="reset" onclick="resetMaze()">Reset Maze</button>
-			<button id="reset" onclick="clearPath()">Clear Path</button>
-			<br />
-
-			
-			<span class="selector">
-				<label for="distance" class="nav-link active pr-1">Distance Measure</label>
-				<select class="form-control" id="distance"  >
-					<option>Manhattan Distance</option>
-				</select>
-			</span>
-
-			<span class="selector">
-				<label for="Neighbours" class="nav-link active pr-1">Neighbours</label>
-				<select class="form-control" id="Neighbours" onchange="handelNeighboursChange()" >
-					<option>4-Adjcent Neighbours</option>
-					<option>Diagonal Neighbours</option>
-					<option>All 8 Neighbours</option>
-				</select>
-			</span>
+			<div>
+				<button id="click_record">Hazard AI Voice</button>
+				<br />
+				<br />
+				<textarea name="" id="convert_text" placeholder="say: 'danger one and two' or 'color one and two'"></textarea>
+				 
+			</div>
 		</div>
 		
 		
@@ -124,11 +111,7 @@
 		</table>
 	</div>
 
-	<div>
-		<button id="click_record">Hazard AI Voice</button>
-    	<textarea name="" id="convert_text" placeholder="say: 'danger one and two' or 'color one and two'"></textarea>
-		 
-	</div>
+
 
 	
 	<div id="notice" class="notice"> Color Blob Notice: </div>
