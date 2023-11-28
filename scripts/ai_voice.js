@@ -9,10 +9,9 @@ function handleButtonClick() {
     window.SpeechRecognition = window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
     recognition.lang = "ko";
-    recognition.continuous = false; // Set continuous to false to receive only the final result
-    recognition.interimResults = false; // Set interimResults to false to suppress intermediate results
+    recognition.continuous = false;
+    recognition.interimResults = false;
 
-    // Mapping between words and numbers
     const wordToNumber = {
         '일': 1,
         '이': 2,
@@ -23,7 +22,7 @@ function handleButtonClick() {
         '칠': 7,
         '팔': 8,
         '구': 9,
-        '심': 10,
+        '십': 10,
         '1': 1,
         '2': 2,
         '3': 3,
@@ -33,62 +32,88 @@ function handleButtonClick() {
         '7': 7,
         '8': 8,
         '9': 9,
-        // Add more as needed
+        '10': 10,
     };
 
-    let transcript = ''; // Initialize an empty transcript variable
+    let transcript = '';
+    let words = [];
+    var category_count = [];
+    var row_collumn = [];
 
     recognition.addEventListener('result', e => {
         const result = e.results[0];
-        transcript = result[0].transcript; // Update the transcript with the final result
+        transcript = result[0].transcript;
         transcript = transcript.replace(/\.$/, '');
         transcript = transcript.replace(/,/g, '');
 
         console.log("transcript", transcript);
 
-        const hazardOrColor = transcript
-            // .toLowerCase()
-            .split(' ');
-        console.log("hazardOrColor", hazardOrColor);
-        
-
-        // Extract words from the recognized speech
-        const words = transcript
+        words = transcript
             .toLowerCase()
-            .split(/\s+|\b(?=\W)/) // Split by any whitespace character
+            .split(/\s+|\b(?=\W)/)
             .filter(word => wordToNumber.hasOwnProperty(word));
 
-        console.log("words", words);
-
-        if (words && words.length >= 2) {
-            const row = wordToNumber[words[0]];
-            const column = wordToNumber[words[1]];
-            console.log(row);
-            console.log(column);
-            document.getElementById("convert_text").innerHTML = transcript;
-
-            // Update the input fields based on the button ID
-            if (hazardOrColor[0] == "위험") {
-                document.getElementById("hazardRowInput").value = row;
-                document.getElementById("hazardColumnInput").value = column;
-                buttonId = 'hazardPoint';
-                // Trigger the submission based on the button ID
-                handleSubmit(buttonId);
-            } else if (hazardOrColor[0] == "색깔") {
-                document.getElementById("colorBlobRowInput").value = row;
-                document.getElementById("colorBlobColumnInput").value = column;
-                buttonId = 'colorBlobPoint';
-                // Trigger the submission based on the button ID
-                handleSubmit(buttonId);
-            }
-
-            
-        }
+        // console.log("words", words);
 
         
+        if(category_count.length == 0){
+            if(transcript.includes("위험")){
+                category_count.push("위험");
+            }
+            else if(transcript.includes("색깔")){
+                category_count.push("색깔");
+            }
+            document.getElementById("convert_text").innerHTML = category_count[0];
+        }
+        
+        if(words.length > 0 && category_count.length > 0 && category_count.length < 3){
+            category_count.push(words[0]);
+            document.getElementById("convert_text").innerHTML = words[0];
+            console.log(category_count.length);
+        }
+
+        if(category_count.length == 3){
+            const row = wordToNumber[category_count[1]];
+            const col = wordToNumber[category_count[2]];
+            if(category_count[0] == "위험"){
+                document.getElementById("hazardRowInput").value = row;
+                document.getElementById("hazardColumnInput").value = col;
+                buttonId = 'hazardPoint';
+                handleSubmit(buttonId);
+            }else{
+                document.getElementById("colorBlobRowInput").value = row;
+                document.getElementById("colorBlobColumnInput").value = col;
+                buttonId = 'colorBlobPoint';
+                handleSubmit(buttonId);
+            }
+            category_count.splice(0);
+
+        }
+
+        // reinput
+        if(transcript.includes("다시")){
+            category_count.splice(0);
+            document.getElementById("convert_text").innerHTML = "다시";
+        }
+
+
+        // Check for '오케이' and stop recognition
+        if (transcript.includes('오케이')) {
+            speech = false;
+            recognition.stop();
+        }
+        // console.log("speech", speech);
     });
 
-    if (speech == true) {
+
+
+    recognition.addEventListener('end', () => {
+        if (speech) {
+            recognition.start();
+        }
+    });
+
+    if (speech) {
         recognition.start();
     }
 }
