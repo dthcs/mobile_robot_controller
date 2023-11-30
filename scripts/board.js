@@ -373,17 +373,16 @@ function clear() {
 function drawLines() {
     ctx.strokeStyle = "rgb(159, 156, 156)";
     for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            ctx.beginPath();
-            ctx.moveTo(tiles[c][r].x, tiles[c][r].y + tileH / 2);
-            ctx.lineTo(tiles[c][r].x + tileW, tiles[c][r].y + tileH / 2);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.moveTo(tiles[c][r].x + tileW / 2, tiles[c][r].y);
-            ctx.lineTo(tiles[c][r].x + tileW / 2, tiles[c][r].y + tileH);
-            ctx.stroke();
-        }
+        ctx.beginPath();
+        ctx.moveTo(tiles[c][0].x + tileW/2, tiles[c][0].y + tileH / 2);
+        ctx.lineTo(tiles[c][tileRowCount-1].x+ tileW/2, tiles[c][tileRowCount-1].y + tileH / 2);
+        ctx.stroke();
+    }
+    for (var r = 0; r < tileRowCount; r++) {
+        ctx.beginPath();
+        ctx.moveTo(tiles[0][r].x + tileW/2, tiles[0][r].y + tileH / 2);
+        ctx.lineTo(tiles[tileColumnCount-1][r].x+ tileW/2, tiles[tileColumnCount-1][r].y + tileH / 2);
+        ctx.stroke();
     }
 }
 
