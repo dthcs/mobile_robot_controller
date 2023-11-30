@@ -143,8 +143,11 @@ function showPath() {
 			}
 
 			if(!temp.previous){
-				displayNotice("No way to spot at (" + (end[0]) + ", " + (end[1]) + ")");
+				displayNotice("No way to spot at (" + (end[1]) + ", " + (end[0]) + ")");
 				// console.log("no way to spot: ", (end[0], end[1]));
+				if(end==spot[0]){
+					displayNotice("Finish!");
+				}
 				resolve();
 				return;
 			}
