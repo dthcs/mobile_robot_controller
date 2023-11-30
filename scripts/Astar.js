@@ -109,10 +109,25 @@ function showPath() {
 	// 	return;
 	// }
 
+	// var temp_path = tiles[end[0]][end[1]];
+	// // let count = 0;
+	// while(temp_path.previous.state != "start"){
+	// 	console.log("temp_path", temp_path);
+	// 	if(tiles[temp_path.column][temp_path.row].state != "blob"){
+	// 		tiles[temp_path.column][temp_path.row].state = "path";
+	// 		temp_path = tiles[temp_path.column][temp_path.row].previous;
+	// 	}
+		
+	// 	// count += 1;
+	// 	// console.log("count: ", count);
+		
+	// }
 
 	console.log("Show path was called ");
 	
 	tiles[end[0]][end[1]].state = "end";
+
+
   
 	return new Promise((resolve) => {
 	  const abc = () => {
@@ -133,7 +148,7 @@ function showPath() {
 		//robot through colorBlob
 		if(tiles[temp.column][temp.row].state === "blob"){
 			//print on web that robot run through a important cell
-			displayNotice("Robot ran through an important cell at (" + (temp.row+1) + ", " + (temp.column+1) + ")");
+			displayNotice("Robot ran through colorBlob at (" + (temp.row+1) + ", " + (temp.column+1) + ")");
 			tiles[temp.column][temp.row].state = "enterBlob";
 		}
 		else{
@@ -169,7 +184,7 @@ function displayNotice(message) {
     }
 }
 
-let count = 1
+// let count = 1
 
 function runRobot(){
 	if(isRobotRunning == false){
@@ -184,7 +199,7 @@ function runRobot(){
 			spot.pop();
 			
 			end = spot[spot.length-1];
-			console.log(count+1);
+			// console.log(count+1);
 			runRobot();
 		}
 	  });
