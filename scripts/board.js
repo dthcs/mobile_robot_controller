@@ -32,20 +32,20 @@ var tiles = []
 
 function handleSubmit(submitType) {
     // Get the input values when the button is clicked
-    var rowsValue = document.getElementById("rowsInput").value;
-    var columnsValue = document.getElementById("columnsInput").value;
+    var rowsValue = parseInt(document.getElementById("rowsInput").value)+1;;
+    var columnsValue = parseInt(document.getElementById("columnsInput").value)+1;
 
-    var startRowValue = document.getElementById("startRowInput").value-1;
-    var startColumnValue = document.getElementById("startColumnInput").value-1;
+    var startRowValue = parseInt(document.getElementById("startRowInput").value);
+    var startColumnValue = parseInt(document.getElementById("startColumnInput").value);
 
-    var hazardRowValue = document.getElementById("hazardRowInput").value-1;
-    var hazardColumnValue = document.getElementById("hazardColumnInput").value-1;
+    var hazardRowValue = parseInt(document.getElementById("hazardRowInput").value);
+    var hazardColumnValue = parseInt(document.getElementById("hazardColumnInput").value);
 
-    var endRowValue = document.getElementById("endRowInput").value-1;
-    var endColumnValue = document.getElementById("endColumnInput").value-1;
+    var endRowValue = parseInt(document.getElementById("endRowInput").value);
+    var endColumnValue = parseInt(document.getElementById("endColumnInput").value);
 
-    var colorBlobRowValue = document.getElementById("colorBlobRowInput").value-1;
-    var colorBlobColumnValue = document.getElementById("colorBlobColumnInput").value-1;
+    var colorBlobRowValue = parseInt(document.getElementById("colorBlobRowInput").value);
+    var colorBlobColumnValue = parseInt(document.getElementById("colorBlobColumnInput").value);
 
     // Call the functions to handle the changes
     if (submitType == 'mapSize') {
@@ -397,33 +397,9 @@ const draw = async () => {
         for (var r = 0; r < tileRowCount; r++) {
             
             rect(tiles[c][r].x, tiles[c][r].y, tileW, tileH, tiles[c][r].state)
-            // Insert picture at position (x, y) of each tile
-            // const image = new Image();
-            // image.src = 'assets/3662787.png'; // Replace with the actual path to your image
-            // ctx.drawImage(image, tiles[c][r].x, tiles[c][r].y, tileW, tileH);
-
-
-
-            // // Draw horizontal line through the center of the tile
-            // ctx.beginPath();
-            // ctx.moveTo(tiles[c][r].x, tiles[c][r].y + tileH / 2);
-            // ctx.lineTo(tiles[c][r].x + tileW, tiles[c][r].y + tileH / 2);
-            // ctx.stroke();
-
-            // // Draw vertical line through the center of the tile
-            // ctx.beginPath();
-            // ctx.moveTo(tiles[c][r].x + tileW / 2, tiles[c][r].y);
-            // ctx.lineTo(tiles[c][r].x + tileW / 2, tiles[c][r].y + tileH);
-            // ctx.stroke();
-
-            
 
         }
     }
-    
-
-    
-
     window.requestAnimationFrame(draw)
 }
 
