@@ -134,8 +134,7 @@ function showPath() {
 			temp = tiles[end[0]][end[1]];
 
 			if (temp == temp_start || isRobotRunning == false) {
-				console.log(start[0], start[1]);
-				if(end==spot[0]){
+				if(end[0] === spot[0][0] && end[1] === spot[0][1]){
 					displayNotice("Finish!");
 				}
 				resolve(); // Resolve the promise when finished
@@ -145,7 +144,7 @@ function showPath() {
 			if(!temp.previous){
 				displayNotice("No way to spot at (" + (end[1]) + ", " + (end[0]) + ")");
 				// console.log("no way to spot: ", (end[0], end[1]));
-				if(end==spot[0]){
+				if(end[0] === spot[0][0] && end[1] === spot[0][1]){
 					displayNotice("Finish!");
 				}
 				resolve();
