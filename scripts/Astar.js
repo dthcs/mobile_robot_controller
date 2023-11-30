@@ -130,48 +130,55 @@ function showPath() {
 
   
 	return new Promise((resolve) => {
-	  const abc = () => {
-		temp = tiles[end[0]][end[1]];
+		const abc = () => {
+			temp = tiles[end[0]][end[1]];
 
-		
+			if (temp == temp_start || isRobotRunning == false) {
+				console.log(start[0], start[1]);
+				if(end==spot[0]){
+					displayNotice("Finish!");
+				}
+				resolve(); // Resolve the promise when finished
+				return;
+			}
 
-		if (temp == temp_start || isRobotRunning == false) {
-			console.log(start[0], start[1]);
-			resolve(); // Resolve the promise when finished
-			return;
-		}
-  
-		while (temp.previous != temp_start) {
-		  temp = temp.previous;
-		}
-			
-		//robot through colorBlob
-		if(tiles[temp.column][temp.row].state === "blob"){
-			//print on web that robot run through a important cell
-			displayNotice("Robot ran through colorBlob at (" + (temp.row+1) + ", " + (temp.column+1) + ")");
-			tiles[temp.column][temp.row].state = "enterBlob";
-		}
-		else{
-			tiles[temp.column][temp.row].state = "start";
-			
-		}
-		//return colorBlob pink color
-		if(tiles[temp.column][temp.row].previous.state === "enterBlob"){
-			tiles[temp.column][temp.row].previous.state = "blob";
-		}else{
-			tiles[temp.column][temp.row].previous.state = "empty";
-		}
+			if(!temp.previous){
+				displayNotice("No way to spot at (" + (end[0]) + ", " + (end[1]) + ")");
+				// console.log("no way to spot: ", (end[0], end[1]));
+				resolve();
+				return;
+			}
+	
+			while (temp.previous != temp_start) {
+			temp = temp.previous;
+			}
+				
+			//robot through colorBlob
+			if(tiles[temp.column][temp.row].state === "blob"){
+				//print on web that robot run through a important cell
+				displayNotice("Robot ran through colorBlob at (" + (temp.row+1) + ", " + (temp.column+1) + ")");
+				tiles[temp.column][temp.row].state = "enterBlob";
+			}
+			else{
+				tiles[temp.column][temp.row].state = "start";
+			}
+			//return colorBlob state
+			if(tiles[temp.column][temp.row].previous.state === "enterBlob"){
+				tiles[temp.column][temp.row].previous.state = "blob";
+			}else{
+				tiles[temp.column][temp.row].previous.state = "empty";
+			}
 
-		temp_start = temp;
-		start[0] = temp_start.column;
-		start[1] = temp_start.row;
-  
-		setTimeout(abc, 500);
-	  };
-  
-	  abc();
+			temp_start = temp;
+			start[0] = temp_start.column;
+			start[1] = temp_start.row;
+	
+			setTimeout(abc, 500);
+			};
+	
+		abc();
 	});
-  }
+}
 
 function displayNotice(message) {
     var noticeDiv = document.getElementById("notice");
@@ -184,7 +191,7 @@ function displayNotice(message) {
     }
 }
 
-// let count = 1
+let isRobotRunning = true; 
 
 function runRobot(){
 	if(isRobotRunning == false){
@@ -193,19 +200,18 @@ function runRobot(){
 	Astar();
 	showPath().then(() => {
 		if(isRobotRunning == false){
-		}
-		else if(spot.length > 1){
+
+		}else if(spot.length > 1){
 
 			spot.pop();
 			
 			end = spot[spot.length-1];
-			// console.log(count+1);
 			runRobot();
 		}
-	  });
+	});
 }
 
-let isRobotRunning = true; // Declare isRunning as a global variable
+
 
 
 function stopRobot() {
