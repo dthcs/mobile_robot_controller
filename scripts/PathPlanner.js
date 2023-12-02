@@ -1,11 +1,7 @@
+
 function heuristics(a, b) {
 	return Math.abs(a.column - b.column) + Math.abs(a.row - b.row);
 }
-
-
-
-// robotWay = true;
-// var openSet = [];
 
 function removeElmentFromArray(arr, element){
 	for (var i = arr.length -1; i >=0; i--){
@@ -27,8 +23,6 @@ function Astar() {
 
 		if (openSet.length == 0) {
 			console.log("open set is empty: ", openSet.length);
-			// robotWay = false;
-			// alert("open set is empty thus no solution")
 			break
 		}
 		if (solved == true) {
@@ -61,7 +55,7 @@ function Astar() {
 		if (closedSet.length > tileRowCount * tileColumnCount) {
 			isRunning = false;
 			solved = false;
-			console.log("Algorithm checking for more than possible case this is a bug and needs to be fixed");
+			console.log("Algorithm checking for more than possible case");
 			break;
 		}
 
@@ -97,106 +91,3 @@ function Astar() {
 		}
 	}
 };
-
-function showPath() {
-	var temp = tiles[end[0]][end[1]];
-	var temp_start = tiles[start[0]][start[1]];
-
-	console.log("Show path was called ");
-	
-	tiles[end[0]][end[1]].state = "end";
-
-
-  
-	return new Promise((resolve) => {
-		const abc = () => {
-			temp = tiles[end[0]][end[1]];
-
-			if (temp == temp_start || isRobotRunning == false) {
-				if(end[0] === spot[0][0] && end[1] === spot[0][1]){
-					displayNotice("Finish!");
-				}
-				resolve(); // Resolve the promise when finished
-				return;
-			}
-
-			if(!temp.previous){
-				displayNotice("No way to spot at (" + (end[1]) + ", " + (end[0]) + ")");
-				// console.log("no way to spot: ", (end[0], end[1]));
-				if(end[0] === spot[0][0] && end[1] === spot[0][1]){
-					displayNotice("Finish!");
-				}
-				resolve();
-				return;
-			}
-	
-			while (temp.previous != temp_start) {
-			temp = temp.previous;
-			}
-				
-			//robot through colorBlob
-			if(tiles[temp.column][temp.row].state === "blob"){
-				//notice robot run through a important cell
-				displayNotice("Robot ran through colorBlob at (" + (temp.row+1) + ", " + (temp.column+1) + ")");
-				tiles[temp.column][temp.row].state = "enterBlob";
-			}
-			else{
-				tiles[temp.column][temp.row].state = "start";
-			}
-			//return colorBlob state
-			if(tiles[temp.column][temp.row].previous.state === "enterBlob"){
-				tiles[temp.column][temp.row].previous.state = "blob";
-			}else{
-				tiles[temp.column][temp.row].previous.state = "empty";
-			}
-
-			temp_start = temp;
-			start[0] = temp_start.column;
-			start[1] = temp_start.row;
-	
-			setTimeout(abc, 500);
-			};
-	
-		abc();
-	});
-}
-
-function displayNotice(message) {
-    var noticeDiv = document.getElementById("notice");
-
-    if (noticeDiv) {
-        // Append the new notice message to the existing content
-        noticeDiv.innerHTML += "<p>" + message + "</p>";
-    } else {
-        console.log(message);
-    }
-}
-
-let isRobotRunning = true; 
-
-function runRobot(){
-	if(isRobotRunning == false){
-		isRobotRunning = true;
-	}
-	Astar();
-	showPath().then(() => {
-		if(isRobotRunning == false){
-
-		}else if(spot.length > 1){
-
-			spot.pop();
-			
-			end = spot[spot.length-1];
-			runRobot();
-		}
-	});
-}
-
-
-
-
-function stopRobot() {
-	isRobotRunning = false;
-    
-	console.log(isRobotRunning);
-}
