@@ -3,34 +3,33 @@
 <head>
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- <link rel="icon" href="favicon.svg"> -->
+	<link rel="icon" href="favicon.svg">
 	<link rel="stylesheet" href="styles.css">
     <title>Path Finder</title>
 </head>
 <body>
-	<div class="container">
-			<canvas id="canvas" width="1200" height="1200" ></canvas>
-		<div class="controls">
-			<a href="https://github.com/dthcs" style="color:black; text-decoration: none;">H2 Team</a>
-			<button onclick="runRobot()" class="astar">Run Robot</button>
-			<button onclick="stopRobot()">Stop</button>
+	<div class="navbar">
+		<div class="icon">
+			<h2 class="logo">
+				<div class="multiEffect">MOBILE ROBOT CONTROLLER</div></h2>
+			<div class="container">
+				<canvas id="canvas" width="1200" height="1200"></canvas>
 
-			<br />
+				<div class="controls">
+					<button onclick="runRobot()" class="astar">Run</button>
+					<button onclick="stopRobot()">Stop</button>
+				</div>
+				<div class="ai_voice">
+					<button id="click_record">AI Voice</button>
+				    <textarea name="textarea" id="convert_text" placeholder="say: '위험 일 이' or '색깔 일 이'"></textarea></div>
+						 
+					</div>
+				</div>
+				</div>
 
-			<div>
-				<button id="click_record">AI Voice</button>
-				<br />
-				<br />
-				<textarea name="" id="convert_text" placeholder="say: '위험 일 이' or '색깔 일 이'"></textarea>
-				 
-			</div>
-		</div>
-		
-		
-
-
-
-		<table>
+			<div class="table-container">
+		    <table>
+			<div class="table">
 			<tr>
 				<td>
 					Map Size 
@@ -42,11 +41,9 @@
 					<input type="number" id="columnsInput"  placeholder="columns = 10 by default" />
 				</td>
 				<td>
-					<button onclick="handleSubmit('mapSize')">Submit</button>
-				</td>
-				<td colspan="4" id="mapSizeDisplay"></td>	
+				<button onclick="handleSubmit('mapSize')">Submit</button>
+			    </td>	
 			</tr>
-
 			
 			<tr>
 				<td>
@@ -59,10 +56,9 @@
 					<input type="number" id="startColumnInput"  placeholder="" />
 				</td>
 				<td>
-					<button onclick="handleSubmit('startPoint')">Submit</button>
-				</td>
-				<td colspan="4" id="mapSizeDisplay"></td>	
-			</tr>
+					<button onclick="handleSubmit('startPoint')">Submit</button>	
+			    </td>
+				</tr>
 
 			<tr>
 				<td>
@@ -108,13 +104,15 @@
 					<button onclick="handleSubmit('colorBlobPoint')">Submit</button>
 				</td>
 			</tr>
-		</table>
-	</div>
+		</table>	
+	</div> 
+</div>
+<div id="notice"class="notice">Notice: </div>	
+<a href="https://github.com/dthcs" style="color: green; text-decoration: none;">H2 Team</a>
+</div>
 
+</div>
 
-
-	
-	<div id="notice" class="notice"> Notice: </div>
 	
 	
 	<script src="scripts/main.js"></script>
@@ -123,3 +121,5 @@
 	<script src="scripts/ai_voice.js"></script>
 </body>
 </html>
+
+
