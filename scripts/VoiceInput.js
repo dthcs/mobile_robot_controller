@@ -46,14 +46,10 @@ function handleButtonClick() {
         transcript = transcript.replace(/\.$/, '');
         transcript = transcript.replace(/,/g, '');
 
-        console.log("transcript", transcript);
-
         words = transcript
             .toLowerCase()
             .split(/\s+|\b(?=\W)/)
             .filter(word => wordToNumber.hasOwnProperty(word));
-
-        // console.log("words", words);
 
         
         if(category_count.length == 0){
@@ -69,7 +65,6 @@ function handleButtonClick() {
         if(words.length > 0 && category_count.length > 0 && category_count.length < 3){
             category_count.push(words[0]);
             document.getElementById("convert_text").innerHTML = words[0];
-            console.log(category_count.length);
         }
 
         if(category_count.length == 3){
@@ -102,7 +97,6 @@ function handleButtonClick() {
             speech = false;
             recognition.stop();
         }
-        // console.log("speech", speech);
     });
 
 
