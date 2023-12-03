@@ -1,4 +1,5 @@
 
+
 var robot_img = new Image();  // Create a new Image object
 robot_img.src = 'assets/robot.png';
 

@@ -1,3 +1,4 @@
+
 let canvas;
 let ctx;
 
@@ -68,18 +69,7 @@ function handleColumnChange(columns) {
     }
 
     //  Adding neighbours to the tiles
-    for (var c = 0; c < tileColumnCount; c++) {
-        for (var r = 0; r < tileRowCount; r++) {
-            var neighbours = [];
-
-            if (c > 0) { neighbours.push(tiles[c - 1][r]) };
-            if (r > 0) { neighbours.push(tiles[c][r - 1]) };
-            if (c < tileColumnCount - 1) { neighbours.push(tiles[c + 1][r]) };
-            if (r < tileRowCount - 1) { neighbours.push(tiles[c][r + 1]) };
-
-            tiles[c][r].neighbours = neighbours;
-        }
-    }
+    handleNeighboursChange();
 }
 
 //handle startPoint
