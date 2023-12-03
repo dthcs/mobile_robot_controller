@@ -15,17 +15,17 @@ function showPath() {
 
 			if (temp == temp_start || isRobotRunning == false) {
 				if(end[0] === spot[0][0] && end[1] === spot[0][1]){
-					displayNotice("Finish!");
+					displayNotice("탐색완료!");
 				}
 				resolve(); // Resolve the promise when finished
 				return;
 			}
 
 			if(!temp.previous){
-				displayNotice("No way to spot at (" + (end[1]) + ", " + (end[0]) + ")");
+				displayNotice("(" + (end[1]) + ", " + (end[0]) + ")에 탐색지점로의 경로를 찾을 수 없습니다!");
 				// console.log("no way to spot: ", (end[0], end[1]));
 				if(end[0] === spot[0][0] && end[1] === spot[0][1]){
-					displayNotice("Finish!");
+					displayNotice("탐색완료!");
 				}
 				resolve();
 				return;
@@ -38,7 +38,7 @@ function showPath() {
 			//robot through colorBlob
 			if(tiles[temp.column][temp.row].state === "blob"){
 				//notice robot run through a important cell
-				displayNotice("Robot ran through colorBlob at (" + (temp.row+1) + ", " + (temp.column+1) + ")");
+				displayNotice("(" + (temp.row+1) + ", " + (temp.column+1) + ")에서 발견했습니다!");
 				tiles[temp.column][temp.row].state = "enterBlob";
 			}
 			else{

@@ -1,43 +1,80 @@
-body {
-    font-family: Arial, Helvetica, sans-serif;
-}
-.container {
-    text-align: center;
+.navbar{
+    width: 1400px;
+    height: 75px;
     margin: auto;
 }
-canvas {
-    background-color: white;
+
+.icon{
+    width: 700px;
+    float: left;
+    height: 50px;
+}
+
+.logo{
+    color: rgb(10, 82, 34);
+    font-size: 40px;
+    font-family: Arial;
+    padding-left: 5cqi;
+    float: left;
+    padding-top: 10px;
+}
+
+.multiEffect{
+    color: green;
+    text-shadow: 2px 2px 2px black, 0 0 25px beige, 0 0 5px darkblue;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(to top, rgba(0,0,0,0.2)50%, rgba(0,0,0,0.2)50%), url(assets/page_background.jpg) no-repeat center center fixed;
+    background-position: center;
+    background-size: cover;
+}
+
+#canvas {
+    background: linear-gradient(to top, rgba(0,0,0,0.2)50%, rgba(0,0,0,0.2)50%), url(assets/map_background.jpg);
+    background-color:wheat;
     border: 0.75px solid black;
     /* border-left: 0.25px solid #1e1f26;
     border-bottom: 0.25px solid #1e1f26 */
 }
 
-table {
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: 1px solid black;
-    border-spacing: 0px;
+
+.container {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    margin: 150px;
 }
-tr {
-    border: 1px solid black;
+
+#canvas {
+    width: 100%;
+    height: 100%;
+    border: 5px solid #2c0505;  
 }
-td {
-    border: 1px solid black;
+
+.ai_voice{
+    position: absolute;
+    top: 30px;
+    left: 140px;
 }
+
 .controls {
+    position: relative;
     text-align: left;
-    padding-left: 50px;
+    margin-left: 165px;
 }
+
 .controls button {
-    margin-top: 10px;
-    margin-left: 10px;
-    border: none;
-    background: none;
-    height: 35px;
-    border: 1px solid #1e1f26;
-    border-radius: 5px;
-    padding: 10px;
+    color: wheat;
+    margin-top: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    border: rgb(195, 138, 32);
+    background: linear-gradient(to top, rgba(0,0,0,0.2)50%, rgba(0,0,0,0.2)50%), url(assets/button.jpeg);
+    padding: 15px;
+    border: 5px solid #2c0505; 
+    border-radius: 10px;
+
 }
 
 .controls .selector {
@@ -46,7 +83,7 @@ td {
     border: none;
     background: none;
     height: 35px;
-    border: 1px solid #1e1f26;
+    border: 1px solid #070e3e;
     border-radius: 5px;
     padding: 10px;
     width: 150px;
@@ -54,21 +91,52 @@ td {
     flex-direction: column;
     align-items: center;
 }
-
 .controls button:hover {
-    background: black;
-    color: white;
+    background: rgb(197, 127, 16);
+    color: rgb(246, 227, 227);
+}
+
+td {
+    border: 2px solid black;
+}
+
+tr{
+    border: 2px solid black;
+}
+
+.table-container{
+    position: absolute;
+    left: 650px;
+    top: 110px;
+    margin-inline: 100px;
+}
+table {
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border: 5px solid #2c0505; 
+    border-radius: 10px;
+}
+
+table td {
+    background-color: wheat;
+    padding: 1px;
+    border-bottom: 1px solid #290303;
+    font-weight: bold;
 }
 
 a {
-    margin-top: 10px;
-    margin-left: 10px;
-
-    background: none;
-
-    border: 1px solid #1e1f26;
-    padding: 10px;
-    border-radius: 5px;
+    position: relative;
+    top: 560px;
+    left: 1260px;
+    color: rgb(10, 82, 34);
+    font-size: 30px;
+    font-family: Arial;
+    padding-left: 5cqi;
+    float: left;
+    padding-top: 10px;
+    text-shadow: 2px 2px 2px black, 0 0 25px beige, 0 0 5px darkblue;
 }
 
 
@@ -77,13 +145,13 @@ a {
     padding-left: 50px;
     padding-right: 50px;
     justify-content: space-between;
-    color: white;
+    color: rgb(243, 235, 235);
     background-color: #1e1f26;
-    padding: 20px;
+    padding: 10px;
     border-radius: 5px;
 }
 .footer a {
-    border: 1px solid white;
+    border: 1px solid rgb(234, 233, 233);
     color: white;
     text-decoration: none;
 }
@@ -98,6 +166,51 @@ input:focus {
     outline: none;
 }
 
-controls .astar:hover {
+.astar:hover {
     background-color: greenyellow;
+}
+
+.notice{
+    padding: 0.25cm;
+    text-align: left;
+    position: absolute;
+    top: 340px;
+    left: 810px;
+    width: 260px;
+    height: 200px;
+    max-height: 250px;
+    overflow: auto;
+    margin: 40px;
+    background-color: wheat;
+    border: 5px solid #2c0505; 
+    border-radius: 10px;
+}
+
+#click_record{
+    position: absolute;
+    left: 400px;
+    top: 130px;
+    width: 50px;
+    height: 50px;
+    color: wheat;
+    position: relative;
+    background-color:#2c0505;
+    border: 5px solid #2c0505; 
+    border-radius: 10px;
+}
+
+#click_record:hover {
+    background: rgb(197, 127, 16);
+    color: rgb(246, 227, 227);
+}
+
+#convert_text{
+    position: relative;
+    width: 380px;
+    height: 300x;
+    top: 80px;
+    left: 470px;
+    background-color: wheat;
+    border: 5px solid #2c0505; 
+    border-radius: 10px;
 }

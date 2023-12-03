@@ -44,7 +44,7 @@ function clear() {
 }
 
 function drawLines() {
-    ctx.strokeStyle = "rgb(159, 156, 156)";
+    ctx.strokeStyle = "rgb(189, 185, 185)";
     for (var c = 0; c < tileColumnCount; c++) {
         ctx.beginPath();
         ctx.moveTo(tiles[c][0].x + tileW/2, tiles[c][0].y + tileH / 2);
